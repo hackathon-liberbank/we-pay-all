@@ -29,10 +29,8 @@ paths:
         required: true
         description: codigo de autorización
       responses:
-        200:
-          description: 200 OK
-          schema:
-            $ref: '#/definitions/TokenResponse'
+        201:
+          description: 200 Created
         400:
           description: 400 Bad Request
           schema:
