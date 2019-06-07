@@ -1,0 +1,17 @@
+#Constanst
+database: hackathon-liberbank
+host: localhost:3306  
+
+#JPA
+spring:
+  jpa: 
+    generate-ddl: true
+    show-sql: false
+    properties: 
+      hibernate: 
+        format_sql : true
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  datasource: 
+    url: jdbc:mysql://${host}/${database}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: root
+    password: root 
