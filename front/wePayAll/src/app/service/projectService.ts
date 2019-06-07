@@ -1,51 +1,75 @@
 import { Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { UserRegistre } from '../model/userRegistre';
+import { Login } from '../model/login';
+import { User } from '../model/user';
 import { sha256 } from 'js-sha256';
+
+import { GLOBAL } from '../model/Global';
 
 @Injectable()
 
-export class UserRegistreService {
+export class UserRegistreService {ss
 
     public url: string;
+    public apiUser: User;
 
 
     constructor(
        public _http: HttpClient
     ) {
-        // this.url = GLOBAL.url
-        // this.apiUser  = JSON.parse(localStorage.getItem('userLogin'));
+        this.url = GLOBAL.url
+        this.apiUser  = JSON.parse(localStorage.getItem('userLogin'));
     }
 
-    // registrado(userRegister: UserRegistre): Observable<any>{
-    //     userRegister.password = sha256(userRegister.password)
-    //     console.log(userRegister.password)
-    //     let json = JSON.stringify(userRegister);
-    //     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    //     let uri = 'registry';
+    registrado(userRegister: UserRegistre): Observable<any>{
+        userRegister.password = sha256(userRegister.password)
+        console.log(userRegister.password)
+        let json = JSON.stringify(userRegister);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        let uri = 'registry';
 
-    //     return this._http.post(this.url + uri, json, {headers: headers});
+        return this._http.post(this.url + uri, json, {headers: headers});
 
-    // }
+    }
 
-    // acceder(user: Login ): Observable<any> {
-    //     user.password = sha256(user.password)
-    //     let json = JSON.stringify(user);
-    //     console.log(user)
-    //     let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    acceder(user: Login ): Observable<any> {
+        user.password = sha256(user.password)
+        let json = JSON.stringify(user);
+        console.log(user)
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    //     return this._http.post(this.url + 'login', json, {headers: headers})
-    // }
+        return this._http.post(this.url + 'login', json, {headers: headers})
+    }
 
-    // getUserLogin() {
+    getUserLogin() {
 
-    //    let apiUser = JSON.parse(localStorage.getItem('userLogin'));
-    //     if(apiUser != 'undefined') {
-    //         this.apiUser = apiUser;
-    //     } else {
-    //         this.apiUser = null;
-    //     }
+       let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+        if(apiUser != 'undefined') {
+            this.apiUser = apiUser;
+        } else {
+            this.apiUser = null;
+        }
 
-    //     return this.apiUser;
-    // }
+        return this.apiUser;
+    }
+
+  //   updateUser( user: User): Observable<any> {
+
+  //     let json = JSON.stringify(user);
+  //     console.log(user)
+  //     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
+  //     console.log(headers)
+  //     return this._http.put(this.url + 'users/'+  user.userID, json, {headers: headers})
+  // }
+
+  // consultHash( idTransaccion: Hash) {
+
+  //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
+
+  //   return this._http.get(this.url + 'transactions/'+  idTransaccion.hash, {headers: headers})
+
+  // }
+
 }

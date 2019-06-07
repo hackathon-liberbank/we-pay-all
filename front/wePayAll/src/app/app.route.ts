@@ -11,6 +11,7 @@ import { RegistreComponent } from './components/registre/registre.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { BlockchainComponent } from './components/blockchain/blockchain.component';
 import { AltaEventoComponent } from './components/alta-evento/alta-evento.component';
+import { SearchComponent } from './components/search/search.component';
 
 // Array de routas
 
@@ -21,10 +22,11 @@ import { AltaEventoComponent } from './components/alta-evento/alta-evento.compon
     { path: 'registre', component: RegistreComponent },
     { path: 'user-profile', component: UserProfileComponent },
     { path: 'blockchain', component: BlockchainComponent },
-    { path: 'alta-evento', component: AltaEventoComponent }
- ]
+    { path: 'alta-evento', component: AltaEventoComponent },
+    { path: 'buscador', component: SearchComponent }
+ ];
 
- //Exportar el módulo del router
+ // Exportar el módulo del router
 
  export const appRoutingProviders: any [] = [];
  export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

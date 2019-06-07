@@ -9,7 +9,7 @@
               </li>
           </div>
 
-          <ul class="navbar-nav">
+          <ul class="navbar-nav" *ngIf="!identity">
               <li>
                   <a [routerLink]="['/login']" class="boton-acceso">
                       <span data-toggle="modal" data-target="#modalAcceso">Acceso Clientes</span>
@@ -23,46 +23,45 @@
               </li>
           </ul>
 
-          <!-- <ul class="nav navbar-nav ml-auto">
+          <ul class="nav navbar-nav ml-auto" *ngIf="identity">
               <li class="dropdown pull-right">
-                  <a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="#"> -->
-                      <!-- Bienvenido {{identity.name}} {{identity.surname}} -->
-                      <!-- Hola weAllPay
+                  <a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
+                      Bienvenido {{identity.name}} {{identity.surname}}
                       <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
                       <li>
-                          <a href="#">
+                          <a [routerLink]="['/user-profile']">
                               <span class="dropdown-item"> Inicio </span>
                           </a>
                       </li>
                       <li>
-                          <a href="#">
+                          <a [routerLink]="['/alta-evento']">
+                              <span class="dropdown-item"> Alta Eventos </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a [routerLink]="['/buscador']">
+                              <span class="dropdown-item"> Buscar </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a [routerLink]="['/blockchain']">
                               <span class="dropdown-item"> Blockchain </span>
                           </a>
                       </li>
                       <li>
-                          <a href="#">
-                              <span class="dropdown-item">Consultar cuenta</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="dropdown-item"> Datos personales </span>
-                          </a>
-                      </li>
-                      <li>
                           <a>
-                              <span class="boton-logout"> Cerrar sesion </span>
+                              <span class="boton-logout" (click)="logOut()"> Cerrar sesion </span>
                           </a>
                       </li>
                   </ul>
               </li>
-          </ul> -->
+          </ul>
       </div>
   </nav>
   <!-- Imagen de fondo -->
-  <div class="fondo">
+  <div class="fondo" *ngIf="!identity">
       <div class="contenedor">
           <img src="../../../assets/img/fondo.jpg" />
           <!-- Boton sobre imagen de fondo -->
@@ -71,7 +70,5 @@
   </div>
 </div>
 
-<!-- <router-outlet></router-outlet> -->
+<router-outlet></router-outlet>
 
-<app-user-profile></app-user-profile>
-<app-login></app-login>
