@@ -9,6 +9,6 @@ import com.wepayall.bankapi.generated.model.FundsAvailableResponse;
 
 public interface FoundsConfirmationService {
 
-    ResponseEntity<FundsAvailableResponse> fundsConfirmationPost(String code, UUID xRequestID, Body body);
+    ResponseEntity<FundsAvailableResponse> fundsConfirmationPost(String token, UUID xRequestID, Body body);
 
 }

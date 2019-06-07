@@ -27,13 +27,13 @@ public class FoundsConfirmationServiceImpl implements FoundsConfirmationService 
     @Autowired
     LiberbankOauth2Properties properties;
 
-    public ResponseEntity<FundsAvailableResponse> fundsConfirmationPost(String code, UUID xRequestId, Body body) {
-        HttpHeaders headers = getLiberbankHeaderForPayments(code, xRequestId);
+    @Override
+    public ResponseEntity<FundsAvailableResponse> fundsConfirmationPost(String token, UUID xRequestId, Body body) {
+        HttpHeaders headers = getLiberbankHeaderForPayments(token, xRequestId);
 
         RestTemplate restTemplate;
         HttpEntity<Body> request;
         ResponseEntity<FundsAvailableResponse> response = null;
-        String accessTokenFromLiberbank = null;
 
         restTemplate = new RestTemplate();
 
@@ -53,7 +53,7 @@ public class FoundsConfirmationServiceImpl implements FoundsConfirmationService 
         return response;
     }
 
-    private HttpHeaders getLiberbankHeaderForPayments(String code, UUID xRequestId) {
+    private HttpHeaders getLiberbankHeaderForPayments(String token, UUID xRequestId) {
         TokenData tokenData = new TokenData(properties);
 
         TokenOAuth2 tokenGenerator = new TokenOAuth2(tokenData);
@@ -62,7 +62,8 @@ public class FoundsConfirmationServiceImpl implements FoundsConfirmationService 
         headers.add("content-type", "application/json");
         headers.add("accept", "application/json");
         headers.add("x-request-id", xRequestId.toString());
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + tokenGenerator.getAccessTokenFromLiberbankForPayments(code));
+        // headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + tokenGenerator.getAccessTokenFromLiberbankForPayments(token));
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
         return headers;
     }

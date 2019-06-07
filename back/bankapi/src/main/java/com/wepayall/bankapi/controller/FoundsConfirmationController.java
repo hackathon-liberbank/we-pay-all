@@ -18,7 +18,7 @@ public class FoundsConfirmationController implements FundsConfirmationsApi {
     FoundsConfirmationService foundsConfirmationService;
 
     @Override
-    public ResponseEntity<FundsAvailableResponse> fundsConfirmationsPost(String code, UUID xRequestId, Body body) {
+    public ResponseEntity<FundsAvailableResponse> fundsConfirmationsPost(String token, UUID xRequestId, Body body) {
         // {
         // "cardNumber": "1196931787259904",
         // "account": {
@@ -31,7 +31,7 @@ public class FoundsConfirmationController implements FundsConfirmationsApi {
         // "amount": 1000
         // }
         // }
-        return foundsConfirmationService.fundsConfirmationPost(code, xRequestId, body);
+        return foundsConfirmationService.fundsConfirmationPost(token, xRequestId, body);
     }
 
 }

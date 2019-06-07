@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
-@SpringBootApplication(scanBasePackages = { "com.padawans.hackaton.bankapi" })
+@SpringBootApplication(scanBasePackages = { "com.wepayall.bankapi" })
 public class BankapiApplication {
 
     public static void main(String[] args) {
