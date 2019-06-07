@@ -12,18 +12,18 @@ import com.example.generated.api.TransactionsApi;
 import com.example.generated.model.TransactionResponse;
 import com.liberbank.apigateway.service.TransactionsService;
 
-
 @Controller
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET})
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET })
 public class TransactionsController implements TransactionsApi {
 
-	@Autowired
-	TransactionsService service;
-	
-	@Override
-	public ResponseEntity<TransactionResponse> transactionsTransactionHashGet(
-			@Size(min = 60, max = 70) String transactionHash) {
-		return service.transactionsTransactionHashGet(transactionHash);
-	}
+    @Autowired
+    TransactionsService service;
+
+    @Override
+    public ResponseEntity<TransactionResponse> transactionsTransactionHashGet(String token,
+            @Size(min = 60, max = 70) String transactionHash) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

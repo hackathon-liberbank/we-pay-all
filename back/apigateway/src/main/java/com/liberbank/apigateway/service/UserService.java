@@ -5,27 +5,25 @@ import javax.validation.constraints.Min;
 
 import org.springframework.http.ResponseEntity;
 
-import com.example.generated.model.Accountrequest;
 import com.example.generated.model.AccountsGetResponse;
-import com.example.generated.model.AccountsResponse;
+import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
-import com.example.generated.model.PaymentsRequest;
 import com.example.generated.model.UserDataUpdate;
 
 public interface UserService {
 
-	
-	
-	public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(@Min(1) Long userID);
+    public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID);
 
-	
-	public ResponseEntity<AccountsResponse> usersUserIDAccountsPost(@Min(1) Long userID,
-			@Valid Accountrequest accountRequest);
+    public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID);
 
-	public ResponseEntity<Void> usersUserIDPaymentsPost(@Min(1) Long userID, @Valid PaymentsRequest paymentRequest);
+    public ResponseEntity<Void> usersUserIDEventsEventIDPaymentsPost(String token, @Min(1) Long userID,
+            @Min(1) Long eventID);
 
+    public ResponseEntity<Void> usersUserIDEventsEventIDPost(String token, @Min(1) Long userID, @Min(1) Long eventID);
 
-	public ResponseEntity<MessageResponse> usersUserIDPut(@Min(1) Long userID, @Valid UserDataUpdate userdata);
-	
-	
+    public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID, @Min(1) Long eventID);
+
+    public ResponseEntity<MessageResponse> usersUserIDPut(String token, @Min(1) Long userID,
+            @Valid UserDataUpdate userdata);
+
 }

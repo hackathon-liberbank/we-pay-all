@@ -3,16 +3,7 @@ info:
   version: '1.0'
   title: 'LiberBank-ApiGateway'
   description: 'LiberBank-ApiGateway definition'
-security:
-  - OAuth2: [] 
-securityDefinitions:
-      OAuth2:
-        type: oauth2
-        flow: accessCode
-        authorizationUrl: https://example.com/oauth/authorize
-        tokenUrl: https://example.com/oauth/token
-        scopes:
-          private: Total access 
+
 paths:
   /login:
     post:
@@ -57,38 +48,126 @@ paths:
           schema:
             $ref: '#/definitions/MessageResponse'
     
-  /users/{userID}/payments:
+  /users/{userID}/events:
     post:
       tags: 
         - Privado
-      security:
-        - OAuth2: [private]    
-      summary: Agregar un producto al usuario.
-      description: Agregar un producto al usuario.
+      summary: Crea un evento desde el perfil de usuario.
+      description: Crea un evento desde el perfil de usuario.
       produces: 
         - application/json
       consumes: 
         - application/json
       parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
         - name: userID
           in: path
           required: true
           type: integer
           minimum: 1
           format: int64
-        - name: PaymentRequest
-          in: body
+        - name: eventID
+          in: path
           required: true
-          schema:
-            $ref: '#/definitions/PaymentsRequest'
+          type: integer
+          minimum: 1
+          format: int64
+        
       responses:
         200:
-          description: OK    
+          description: OK 
+  
+  /users/{userID}/events/{eventID}:
+   get:
+     tags: 
+        - Privado
+     summary: Recuperar la informacion de un evento
+     description: Recuperar la informacion de un evento 
+     parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+     responses:
+       200:
+         description: OK
+         schema:
+           $ref: '#/definitions/Event'
+   post:
+      tags: 
+        - Privado
+      summary: Agregar un usuario a un evento 
+      description: Agregar un usuario desde su perfil a un evento
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+      responses:
+       200:
+         description: OK
+  
+  /users/{userID}/events/{eventID}/payments:
+    post:
+      tags: 
+        - Privado
+      summary: Realizar un pago desde la cuenta generada del evento.
+      description: Realizar un pago desde la cuenta generada del evento.
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+      responses:
+        200:
+          description: OK
+    
   
   /users/{userID}:
     put:
-      security:
-        - OAuth2: [private]
       tags: 
         - Privado
       summary: Modificar datos de Usuario.
@@ -98,6 +177,10 @@ paths:
       consumes: 
         - application/json
       parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
         - name: userID
           in: path
           required: true
@@ -116,46 +199,20 @@ paths:
             $ref: '#/definitions/MessageResponse'
   
   /users/{userID}/accounts:
-    post:
-      tags: 
-        - Privado
-      security:
-        - OAuth2: [private]    
-      summary: Agregar una cuenta al usuario.
-      description: Agregar un cuenta al usuario.
-      produces: 
-        - application/json
-      consumes: 
-        - application/json
-      parameters: 
-        - name: userID
-          in: path
-          required: true
-          type: integer
-          minimum: 1
-          format: int64
-        - name: AccountRequest
-          in: body
-          required: false
-          schema:
-            $ref: '#/definitions/Accountrequest'
-      responses:
-        201:
-          description: OK
-          schema:
-            $ref: '#/definitions/AccountsResponse'
     get:
       tags: 
         - Privado
-      security:
-        - OAuth2: [private]    
       summary: Consultar los datos las cuentas de un usuario
       description: Consultar los datos las cuentas de un usuario
       produces: 
         - application/json
       consumes: 
         - application/json
-      parameters: 
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
         - name: userID
           in: path
           required: true
@@ -172,15 +229,17 @@ paths:
     get:
       tags: 
         - Privado
-      security:
-        - OAuth2: [private]    
       produces: 
         - application/json
       consumes: 
         - application/json
       summary: Obtener los datos de la transaccion registrados en la blockchain.
       description: Obtener los datos de la transaccion registrados en la blockchain.
-      parameters: 
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
         - name: transactionHash
           in: path
           required: true
@@ -196,33 +255,40 @@ paths:
 
 definitions:
   
+  Event:
+    type: object
+    properties:
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      initialTime:
+        type: string
+      endTime:
+        type: string
+      description:
+        type: string
+      iban:
+        type: string
+      name:
+        type: string
+        
+      
+      
+  
   TransactionResponse:
     type: object
     properties:
-      debitor:
-        $ref: '#/definitions/User'
+      event:
+        type: string
       creditor:
-        $ref: '#/definitions/User'
+        type: string
       ammount:
         type: integer
         format: int64
         
   
-  PaymentsRequest:
-    type: object
-    properties:
-      ammount:
-        type: integer
-        format: int64
-      debtorAccount:
-        type: object
-        $ref: '#/definitions/AccountsResponse'
-      transactionFeeIndicator:
-        type: boolean
-      message:
-        type: string
-      remittanceInformationUnstructured:
-        type: string
+  
   
   AccountsGetResponse:
     type: object

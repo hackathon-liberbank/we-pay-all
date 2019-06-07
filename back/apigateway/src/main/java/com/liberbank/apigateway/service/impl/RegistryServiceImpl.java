@@ -24,47 +24,49 @@ import com.liberbank.apigateway.utils.DataUtils;
 @Service
 public class RegistryServiceImpl implements RegistryService {
 
-	private static final Log LOG = LogFactory.getLog(RegistryServiceImpl.class);
+    private static final Log LOG = LogFactory.getLog(RegistryServiceImpl.class);
 
-	@Autowired
-	UserRpository userRepository;
-	
-	@Autowired 
-	AddressRepository addressRepository;
+    @Autowired
+    UserRpository userRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
-	
-	@Override
-	public ResponseEntity<MessageResponse> registryPost(UserData userdata) {
-		LOG.info(userdata.toString());
-		LOG.info("INICIANDO REGISTRO USUARIO---> " + userdata.getName());
-		if (userRepository.existsByUserName(userdata.getEmail())) {
-			LOG.info("Fail -> Username is already taken!");
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+    @Autowired
+    AddressRepository addressRepository;
 
-		UserDAO user = new UserDAO(userdata.getName(), userdata.getSurname(), userdata.getPhone(), userdata.getEmail(),
-				null, encoder.encode(userdata.getPassword().toUpperCase()));
-		AddressDAO address = DataUtils.getAdressFromRequest(userdata.getAddress());
-		
-		
-		try {
-			user.setAddress(address);
-			address.setUser(user);
-			userRepository.save(user);
-		} catch (Exception e) {
-			throw new UserRepositoryException("El ususario no ha podido registrarse. Debido a : "+e.getMessage());
-		}
-		
-		MessageResponse message = new MessageResponse();
-		LOG.info("REGISTRO USUARIO COMPLETADO  PARA EL USUARIO-> " + user.getUserName());
-		message.setHttpStatus(201);
-		message.setMessage("Usuario Registrado");
-		message.setTimestamp(new Timestamp(new Date().getTime()).toString());
-		message.setReasonPhrase("CREATED");
-		return new ResponseEntity<MessageResponse>(message, HttpStatus.CREATED);
+    @Autowired
+    PasswordEncoder encoder;
 
-	}
+    @Override
+    public ResponseEntity<MessageResponse> registryPost(UserData userdata) {
+        LOG.info(userdata.toString());
+        LOG.info("INICIANDO REGISTRO USUARIO---> " + userdata.getName());
+        if (userRepository.existsByUserName(userdata.getEmail())) {
+            LOG.info("Fail -> Username is already taken!");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        UserDAO user = new UserDAO();
+        user.setName(userdata.getName());
+        user.setSurname(userdata.getSurname());
+        user.setUserName(userdata.getEmail());
+        user.setPassword(encoder.encode(userdata.getPassword().toUpperCase()));
+
+        AddressDAO address = DataUtils.getAdressFromRequest(userdata.getAddress());
+
+        try {
+            user.setAddress(address);
+            address.setUser(user);
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new UserRepositoryException("El ususario no ha podido registrarse. Debido a : " + e.getMessage());
+        }
+
+        MessageResponse message = new MessageResponse();
+        LOG.info("REGISTRO USUARIO COMPLETADO  PARA EL USUARIO-> " + user.getUserName());
+        message.setHttpStatus(201);
+        message.setMessage("Usuario Registrado");
+        message.setTimestamp(new Timestamp(new Date().getTime()).toString());
+        message.setReasonPhrase("CREATED");
+        return new ResponseEntity<MessageResponse>(message, HttpStatus.CREATED);
+
+    }
 
 }
