@@ -35,10 +35,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/LoginResponse'
-        default:
-          description: error inesperado
-          schema: 
-            $ref: '#/definitions/ErrorResponse'
   /registry:
     post:
       tags: 
@@ -60,10 +56,6 @@ paths:
           description: CREATED
           schema:
             $ref: '#/definitions/MessageResponse'
-        default:
-          description: error inesperado
-          schema: 
-            $ref: '#/definitions/ErrorResponse'
     
   /users/{userID}/payments:
     post:
@@ -92,10 +84,6 @@ paths:
       responses:
         200:
           description: OK    
-        default:
-          description: error inesperado
-          schema: 
-            $ref: '#/definitions/ErrorResponse'
   
   /users/{userID}:
     put:
@@ -180,8 +168,46 @@ paths:
           schema:
             $ref: '#/definitions/AccountsGetResponse'     
 
-definitions:
+  /transactions/{transactionHash}:
+    get:
+      tags: 
+        - Privado
+      security:
+        - OAuth2: [private]    
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      summary: Obtener los datos de la transaccion registrados en la blockchain.
+      description: Obtener los datos de la transaccion registrados en la blockchain.
+      parameters: 
+        - name: transactionHash
+          in: path
+          required: true
+          type: string
+          minLength: 60
+          maxLength: 70
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/TransactionResponse'  
+ 
 
+definitions:
+  
+  TransactionResponse:
+    type: object
+    properties:
+      debitor:
+        $ref: '#/definitions/User'
+      creditor:
+        $ref: '#/definitions/User'
+      ammount:
+        type: integer
+        format: int64
+        
+  
   PaymentsRequest:
     type: object
     properties:
@@ -236,7 +262,17 @@ definitions:
         type: string
       message:
         type: string
-      
+  
+  User:
+   type: object
+   properties:
+      name:
+        type: string
+        minLength: 3
+      surname:
+        type: string
+        minLength: 3
+    
   
   UserData:
     type: object
@@ -358,18 +394,7 @@ definitions:
       productName:
         type: string
     
-  ErrorResponse:
-    type: object
-    description: Tipo de error ocurrido.
-    properties:
-      mensaje:
-        type: string
-        maxLength: 250
-        pattern: "[^A-Za-z0-9]"
-      tipo:
-        type: string
-        maxLength: 250
-        pattern: "[^A-Za-z0-9]"
+
 
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com

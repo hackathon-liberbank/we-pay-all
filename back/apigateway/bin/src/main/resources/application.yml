@@ -2,7 +2,7 @@
 server:
   port: 8080
 #Constanst
-database: we-pay-all-db
+database: liberbank-database
 host: localhost:3306  
 
 #JPA
@@ -12,14 +12,14 @@ spring:
     show-sql: false
     properties: 
       hibernate: 
-        format_sql : true
-        dialect: org.hibernate.dialect.MySQL5Dialect 
+        format_sql : true 
   datasource: 
     url: jdbc:mysql://${host}/${database}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
     username: root
     password: root  
     
 # App Properties
-app: 
-    jwtSecret: padawansSecretKey
+grokonez:
+  app: 
+    jwtSecret: jwtGrokonezSecretKey
     jwtExpiration: 86400
