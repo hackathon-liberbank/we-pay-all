@@ -1,0 +1,14 @@
+package com.wepayall.bankapi.service;
+
+import java.util.UUID;
+
+import org.springframework.http.ResponseEntity;
+
+import com.wepayall.bankapi.generated.model.Body;
+import com.wepayall.bankapi.generated.model.FundsAvailableResponse;
+
+public interface FoundsConfirmationService {
+
+    ResponseEntity<FundsAvailableResponse> fundsConfirmationPost(String token, UUID xRequestID, Body body);
+
+}

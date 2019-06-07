@@ -1,0 +1,12 @@
+app:
+  oauth2:
+    identification: padawans
+    api:
+      identification: padawans
+      url: https://api-glbk.liberbank.es/tpps/sb
+      token: https://api-glbk.liberbank.es/tpps/sb/oauth2/token
+      username: padawans
+      password: 8au8Yb2XDXaRIo9a
+      clientId: b736e1de-4225-42bd-9bad-88329c07c484
+      clientSecret: uY1mR6pY3uS1oE4xB5vV2aN8vG0hC8cO7eD0uK2bT8pK1eF4rJ
+      redirectUrl: http://localhost:4200/user-profile
