@@ -1,0 +1,77 @@
+<!-- Barra de Navegación -->
+<div class="navigation col-lg-12">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse">
+
+          <div class="navbar-header">
+              <li class="navbar-brand">
+                  <img src="../assets/img/liberbank-reto.png" width="30" height="30" alt="">
+              </li>
+          </div>
+
+          <ul class="navbar-nav">
+              <li>
+                  <a [routerLink]="['/login']" class="boton-acceso">
+                      <span data-toggle="modal" data-target="#modalAcceso">Acceso Clientes</span>
+                  </a>
+              </li>
+
+              <li>
+                  <a [routerLink]="['/registre']" class="boton-login">
+                      <span data-toggle="modal" data-target="#modalRegistro"> Registrate </span>
+                  </a>
+              </li>
+          </ul>
+
+          <!-- <ul class="nav navbar-nav ml-auto">
+              <li class="dropdown pull-right">
+                  <a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="#"> -->
+                      <!-- Bienvenido {{identity.name}} {{identity.surname}} -->
+                      <!-- Hola weAllPay
+                      <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a href="#">
+                              <span class="dropdown-item"> Inicio </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#">
+                              <span class="dropdown-item"> Blockchain </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#">
+                              <span class="dropdown-item">Consultar cuenta</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#">
+                              <span class="dropdown-item"> Datos personales </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a>
+                              <span class="boton-logout"> Cerrar sesion </span>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+          </ul> -->
+      </div>
+  </nav>
+  <!-- Imagen de fondo -->
+  <div class="fondo">
+      <div class="contenedor">
+          <img src="../../../assets/img/fondo.jpg" />
+          <!-- Boton sobre imagen de fondo -->
+          <!-- <button type="button" class="btn btn-warning boton">Acceso Clientes</button> -->
+      </div>
+  </div>
+</div>
+
+<!-- <router-outlet></router-outlet> -->
+
+<app-user-profile></app-user-profile>
+<app-login></app-login>

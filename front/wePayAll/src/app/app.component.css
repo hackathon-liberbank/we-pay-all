@@ -1,0 +1,181 @@
+body {
+  padding-top: 70px;
+  background-image: url('../assets/img/fondo.jpg');
+}
+
+.navigation {
+  padding: 0px !important;
+  border-radius: 0px !important;
+}
+
+.navigation .navbar {
+  border-radius: 0px !important;
+}
+
+.navbar-brand img {
+  width: 110px;
+}
+
+.btn-success {
+  background-color: #00A38D;
+  border-color: #00A38D;
+}
+
+.btn-secondary.dropdown-toggle {
+  background-color: #00A38D !important;
+  border-color: #00A38D !important;
+  font-family: 'Open';
+}
+
+.dropdown-menu {
+font-family: 'Open';
+}
+
+.dropdown-menu li a:hover {
+text-decoration: none !important;
+}
+
+.boton-acceso {
+  color: #00A38D !important;
+  text-decoration: none !important;
+  font-weight: bold !important;
+  font-size: 15px !important;
+  margin-right: 25px !important;
+  cursor: pointer;
+}
+
+.boton-acceso:hover {
+  text-decoration: skip !important;
+  list-style: none !important;
+  color: black !important;
+  font-size: 16px !important;
+}
+
+.boton-login {
+  color: #00A38D;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+
+}
+
+.boton-login:hover {
+  text-decoration: skip !important;
+  list-style: none !important;
+  color: black;
+  font-size: 16px;
+}
+
+@font-face {
+font-family: 'Open';
+src: url('../assets/font/OpenSans-Light.ttf');
+}
+
+.boton-logout {
+  color: #00A38D;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 14%;
+  font-family: 'Open';
+  cursor: pointer;
+}
+
+.btn-outline-warning {
+  margin-left: 7px !important;
+  padding: 2px !important;
+  margin-top: 5px !important;
+  font-family: 'Open';
+}
+
+.parrafoIdentidad {
+  margin-top: 10px;
+  font-family: 'Open';
+}
+
+/* .dropdown-toggle {
+  margin-left: 827px;
+} */
+
+/* .dropdown-menu {
+  margin-left: 814px;
+} */
+
+.dropdown-menu .btn-outline-warning {
+  margin-left: 25px !important;
+  font-family: 'Open';
+}
+
+
+/* MENSAJE ERROR VALIDADOR REGISTRO */
+
+.alert-name {
+  border-style: solid;
+  font-size: 14px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #f5c6cb;
+  background: #f8d7da;
+  color: #721c24;
+  padding: 0px 133px;
+  margin-left: 1px;
+  font-family: 'Open';
+}
+
+.alert-name-email {
+  border-style: solid;
+  font-size: 14px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #f5c6cb;
+  background: #f8d7da;
+  color: #721c24;
+  padding: 0px 95px;
+  margin-left: 1px;
+  font-family: 'Open';
+}
+
+.alert-name-country {
+  border-style: solid;
+  font-size: 14px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #f5c6cb;
+  background: #f8d7da;
+  color: #721c24;
+  margin-left: 1px;
+  font-family: 'Open';
+}
+
+.alert-name-street {
+  border-style: solid;
+  font-size: 14px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #f5c6cb;
+  background: #f8d7da;
+  color: #721c24;
+  padding: 0px 14px;
+  margin-left: 1px;
+  font-family: 'Open';
+}
+
+.contenedor img {
+  position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  top: 57px;
+  width: 100%;
+}
+
+
+
+/* BOTON SOBRE IMAGEN DE FONDO */
+
+
+/* .boton {
+          position: absolute;
+          top: 75%;
+          left: 50%;
+          border-radius: 15px;
+          transform: translate(-50%, -50%);
+} */

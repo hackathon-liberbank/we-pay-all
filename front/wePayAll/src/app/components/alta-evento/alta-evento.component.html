@@ -1,0 +1,31 @@
+<div class="contenedor">
+  <img src="../../../assets/img/tranquilidad.jpg" />
+  <div class="contenedor-pequeno">
+      <div class="span">
+          <span>Alta de Eventos!</span>
+      </div>
+
+      <form #formAltas="ngForm" (ngSubmit)="suscribirse(formAltas)" *ngIf="show">
+          <input type="text" placeholder="Nombre del evento">
+          <textarea placeholder="Descripción"></textarea>
+          <input type="text" placeholder="Cantidad a aportar(EUR)">
+          <input type="text" placeholder="Fecha Inicio">
+          <input type="text" placeholder="Fecha Fin">
+
+          <button type="submit" class="btn btn-info" value="acceder" *ngIf="show">Suscribirse</button>
+      </form>
+
+      <div class="container-fluid" *ngIf="!show">
+          <p>Detalles de la suscripción</p>
+
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item"><a>ES23423543535354</a></li>
+              <li class="list-group-item">EUR</li>
+              <li class="list-group-item">Producto</li>
+              <br><hr/>
+          </ul>
+            <button (click)="pagar()" class="btn btn-warning">Pagar</button>
+      </div>
+
+  </div>
+</div>
