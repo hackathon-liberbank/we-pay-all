@@ -47,6 +47,21 @@ paths:
           description: CREATED
           schema:
             $ref: '#/definitions/MessageResponse'
+  
+  /token:
+     post:
+      tags: 
+        - Privado
+      summary: obtener la autorizacion del banco.
+      description: obtener la autorizacion del banco.
+      parameters: 
+       - name: code
+         type: string
+         required: true
+         in: header
+      responses:
+        201:
+          description: CREATED
     
   /users/{userID}/events:
     post:
@@ -258,14 +273,10 @@ definitions:
   Event:
     type: object
     properties:
-      users:
+      price:
         type: array
         items:
           $ref: '#/definitions/User'
-      initialTime:
-        type: string
-      endTime:
-        type: string
       description:
         type: string
       iban:

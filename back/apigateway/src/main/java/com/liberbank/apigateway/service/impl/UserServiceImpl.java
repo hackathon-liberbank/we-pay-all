@@ -27,8 +27,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRpository userRepository;
 
-    @Autowired
-
     @Override
     public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID) {
         // TODO Auto-generated method stub
