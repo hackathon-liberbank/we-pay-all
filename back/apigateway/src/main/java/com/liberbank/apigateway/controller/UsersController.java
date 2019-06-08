@@ -19,6 +19,7 @@ import com.example.generated.model.MessageResponse;
 import com.example.generated.model.PaymentInitiationRequest;
 import com.example.generated.model.PaymentInitiationResponse;
 import com.example.generated.model.UserDataUpdate;
+import com.liberbank.apigateway.service.PaymentsService;
 import com.liberbank.apigateway.service.UserService;
 
 @Controller
@@ -27,6 +28,9 @@ public class UsersController implements UsersApi {
 
     @Autowired
     UserService service;
+
+    @Autowired
+    PaymentsService paymentsService;
 
     @Override
     public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID) {
@@ -38,13 +42,6 @@ public class UsersController implements UsersApi {
     public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID) {
         return service.usersUserIDEventsEventIDGet(token, userID, eventID);
     }
-
-    // @Override
-    // public ResponseEntity<Void> usersUserIDEventsEventIDPaymentsPost(String token, @Min(1) Long userID,
-    // @Min(1) Long eventID) {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
 
     @Override
     public ResponseEntity<Void> usersUserIDEventsEventIDPost(String token, @Min(1) Long userID, @Min(1) Long eventID) {
@@ -71,11 +68,11 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<PaymentInitiationResponse> usersUserIDEventsEventIDPaymentsPost(@Min(1) Long userID,
-            String token, @Min(1) Long eventID, String paymentProduct, UUID xRequestId, String psUIPAddress,
-            @Valid PaymentInitiationRequest postReqBodyPayments) {
-        // TODO Auto-generated method stub
-        return null;
+    public ResponseEntity<PaymentInitiationResponse> usersUserIDEventsEventIDPaymentsPaymentProductPost(
+            @Min(1) Long userID, String token, @Min(1) Long eventID, String paymentProduct, UUID xRequestId,
+            String psUIPAddress, @Valid PaymentInitiationRequest postReqBodyPayments) {
+        return paymentsService.paymentsPaymentProductPost(token, userID, eventID, paymentProduct, psUIPAddress,
+                xRequestId, postReqBodyPayments);
     }
 
 }

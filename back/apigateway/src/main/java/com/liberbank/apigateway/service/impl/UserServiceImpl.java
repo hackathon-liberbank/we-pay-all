@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -20,14 +21,18 @@ import com.example.generated.model.AccountsGetResponse;
 import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
+import com.example.generated.model.PaymentInitiationRequest;
+import com.example.generated.model.PaymentInitiationResponse;
 import com.example.generated.model.User;
 import com.example.generated.model.UserDataUpdate;
+import com.google.gson.Gson;
 import com.liberbank.apigateway.dao.EventDAO;
 import com.liberbank.apigateway.dao.UserDAO;
 import com.liberbank.apigateway.exceptions.EventRepositoryException;
 import com.liberbank.apigateway.exceptions.UserRepositoryException;
 import com.liberbank.apigateway.repository.EventRepository;
 import com.liberbank.apigateway.repository.UserRpository;
+import com.liberbank.apigateway.service.PaymentsService;
 import com.liberbank.apigateway.service.UserService;
 
 @Service
@@ -40,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    PaymentsService paymentsService;
 
     @Override
     public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID) {
@@ -72,8 +80,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Void> usersUserIDEventsEventIDPaymentsPost(String token, @Min(1) Long userID,
             @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
+
+        String jsonPaymentData = "{\r\n  \"creditorAccount\": {\r\n    \"currency\": \"EUR\",\r\n    \"iban\": \"ES1720480000003400138578\"\r\n  },\r\n  \"creditorAddress\": {\r\n    \"buildingNumber\": \"2\",\r\n    \"city\": \"Madrid\",\r\n    \"countryCode\": \"ESP\",\r\n    \"postalCode\": \"28050\",\r\n    \"street\": \"Fuente de la mora\"\r\n  },\r\n  \"creditorAgent\": \"337562046\",\r\n  \"creditorName\": \"Pedro Garc\u00EDa Hidalgo\",\r\n  \"debtorAccount\": {\r\n    \"currency\": \"EUR\",\r\n    \"iban\": \"ES1720480000003400138578\"\r\n  },\r\n  \"endToEndIdentification\": \"3456345623457\",\r\n  \"eventID\": 0,\r\n  \"instructedAmount\": {\r\n    \"amount\": 0,\r\n    \"currency\": \"EUR\"\r\n  },\r\n  \"remittanceInformationUnstructured\": \"string\",\r\n  \"requestedExecutionDate\": \"2017-07-21\",\r\n  \"userID\": 0\r\n}";
+
+        PaymentInitiationRequest postReqBodyPayments = new Gson().fromJson(jsonPaymentData,
+                PaymentInitiationRequest.class);
+
+        ResponseEntity<PaymentInitiationResponse> response = paymentsService.paymentsPaymentProductPost(token, userID,
+                eventID, "sepa-credit-transfers", "192.168.200.100", UUID.randomUUID(), postReqBodyPayments);
+
+        ResponseEntity<Void> paymentResponse = null;
+        if (response != null && response.getStatusCode() == HttpStatus.CREATED) {
+            paymentResponse = new ResponseEntity<>(HttpStatus.CREATED);
+        }
+
+        return paymentResponse;
     }
 
     @Override
