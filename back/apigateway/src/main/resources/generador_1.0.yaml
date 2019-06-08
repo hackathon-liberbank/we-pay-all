@@ -3,7 +3,6 @@ info:
   version: '1.0'
   title: 'LiberBank-ApiGateway'
   description: 'LiberBank-ApiGateway definition'
-
 paths:
   /login:
     post:
@@ -48,7 +47,7 @@ paths:
           schema:
             $ref: '#/definitions/MessageResponse'
   
-  /token:
+  /token/{code}:
      post:
       tags: 
         - Privado
@@ -58,10 +57,14 @@ paths:
        - name: code
          type: string
          required: true
-         in: header
+         in: path
+         
       responses:
         201:
           description: CREATED
+          schema:
+            $ref: '#/definitions/Token'
+          
   /payments/{payment-product}:
     post:
       tags:
@@ -121,10 +124,6 @@ paths:
      summary: Recuperar la informacion de un evento
      description: Recuperar la informacion de un evento 
      parameters: 
-        - name: token
-          in: header
-          type: string
-          required: true
         - name: userID
           in: path
           required: true
@@ -339,7 +338,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/AccountsGetResponse'     
-
   /transactions/{transactionHash}:
     get:
       tags: 
@@ -367,7 +365,6 @@ paths:
           schema:
             $ref: '#/definitions/TransactionResponse'  
  
-
 definitions:
   
   Event:
@@ -572,6 +569,12 @@ definitions:
         type: string
         minLength: 4
   
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+  
   Product:
     type: object
     properties:
@@ -738,7 +741,6 @@ definitions:
         type: string
         pattern: ^[A-Z]{3}$
         example: ESP
-
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
 basePath: /pedrodlf/LiberBank-ApiGateway/1.0

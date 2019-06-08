@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-06-08T05:36:45.607+02:00")
 
-public class PaymentResponseDAO   {
+public class PaymentResponseBlockChainDTO   {
   @JsonProperty("transactionHash")
   private String transactionHash = null;
 
@@ -23,7 +23,7 @@ public class PaymentResponseDAO   {
   @JsonProperty("timestamp")
   private Long timestamp = null;
 
-  public PaymentResponseDAO transactionHash(String transactionHash) {
+  public PaymentResponseBlockChainDTO transactionHash(String transactionHash) {
     this.transactionHash = transactionHash;
     return this;
   }
@@ -43,7 +43,7 @@ public class PaymentResponseDAO   {
     this.transactionHash = transactionHash;
   }
 
-  public PaymentResponseDAO blocknumber(Long blocknumber) {
+  public PaymentResponseBlockChainDTO blocknumber(Long blocknumber) {
     this.blocknumber = blocknumber;
     return this;
   }
@@ -63,7 +63,7 @@ public class PaymentResponseDAO   {
     this.blocknumber = blocknumber;
   }
 
-  public PaymentResponseDAO timestamp(Long timestamp) {
+  public PaymentResponseBlockChainDTO timestamp(Long timestamp) {
     this.timestamp = timestamp;
     return this;
   }
@@ -92,10 +92,10 @@ public class PaymentResponseDAO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentResponseDAO paymentResponseDAO = (PaymentResponseDAO) o;
-    return Objects.equals(this.transactionHash, paymentResponseDAO.transactionHash) &&
-        Objects.equals(this.blocknumber, paymentResponseDAO.blocknumber) &&
-        Objects.equals(this.timestamp, paymentResponseDAO.timestamp);
+    PaymentResponseBlockChainDTO paymentResponseBlockChainDTO = (PaymentResponseBlockChainDTO) o;
+    return Objects.equals(this.transactionHash, paymentResponseBlockChainDTO.transactionHash) &&
+        Objects.equals(this.blocknumber, paymentResponseBlockChainDTO.blocknumber) &&
+        Objects.equals(this.timestamp, paymentResponseBlockChainDTO.timestamp);
   }
 
   @Override

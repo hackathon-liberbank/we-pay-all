@@ -62,9 +62,9 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Event> usersUserIDEventsGet(String token, @Min(1) Long userID) {
+    public ResponseEntity<Event> usersUserIDEventsGet(@Min(1) Long userID) {
         // TODO Auto-generated method stub
-        return service.usersUserIDEventsGet(token, userID);
+        return service.usersUserIDEventsGet(null, userID);
     }
 
     @Override

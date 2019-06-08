@@ -11,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.generated.model.Token;
 import com.liberbank.apigateway.service.TokenService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class TokenServiceImpl implements TokenService {
     String bankApiPort;
 
     @Override
-    public ResponseEntity<Void> tokenPost(String code) {
+    public ResponseEntity<Token> tokenPost(String code) {
         RestTemplate restTemplate;
         HttpEntity<MultiValueMap<String, String>> request;
         ResponseEntity<Void> response = null;
@@ -54,14 +55,11 @@ public class TokenServiceImpl implements TokenService {
         if (response != null && response.getStatusCode() == HttpStatus.CREATED) {
             accessTokenFromLiberbank = response.getHeaders().get("token").get(0);
         }
-
-        HttpHeaders headersRespose = new HttpHeaders();
-        headersRespose.add("token", accessTokenFromLiberbank);
-
-        response = new ResponseEntity<>(headersRespose, HttpStatus.CREATED);
+        Token token = new Token();
+        token.setToken(accessTokenFromLiberbank);
 
         log.info("Access-Token from OAuth2 Padawans Liberbank: {}", accessTokenFromLiberbank);
-        return response;
+        return new ResponseEntity<Token>(token, HttpStatus.CREATED);
     }
 
     private HttpHeaders getBankapiHeaders() {

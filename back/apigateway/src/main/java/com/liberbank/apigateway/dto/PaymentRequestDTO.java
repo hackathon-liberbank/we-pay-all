@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-06-08T05:36:45.607+02:00")
 
-public class PaymentRequestDAO   {
+public class PaymentRequestDTO   {
   @JsonProperty("eventID")
   private Long eventID = null;
 
@@ -23,7 +23,7 @@ public class PaymentRequestDAO   {
   @JsonProperty("amount")
   private Long amount = null;
 
-  public PaymentRequestDAO eventID(Long eventID) {
+  public PaymentRequestDTO eventID(Long eventID) {
     this.eventID = eventID;
     return this;
   }
@@ -43,7 +43,7 @@ public class PaymentRequestDAO   {
     this.eventID = eventID;
   }
 
-  public PaymentRequestDAO beneficiary(Long beneficiary) {
+  public PaymentRequestDTO beneficiary(Long beneficiary) {
     this.beneficiary = beneficiary;
     return this;
   }
@@ -63,7 +63,7 @@ public class PaymentRequestDAO   {
     this.beneficiary = beneficiary;
   }
 
-  public PaymentRequestDAO amount(Long amount) {
+  public PaymentRequestDTO amount(Long amount) {
     this.amount = amount;
     return this;
   }
@@ -92,10 +92,10 @@ public class PaymentRequestDAO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentRequestDAO paymentRequestDAO = (PaymentRequestDAO) o;
-    return Objects.equals(this.eventID, paymentRequestDAO.eventID) &&
-        Objects.equals(this.beneficiary, paymentRequestDAO.beneficiary) &&
-        Objects.equals(this.amount, paymentRequestDAO.amount);
+    PaymentRequestDTO paymentRequestDTO = (PaymentRequestDTO) o;
+    return Objects.equals(this.eventID, paymentRequestDTO.eventID) &&
+        Objects.equals(this.beneficiary, paymentRequestDTO.beneficiary) &&
+        Objects.equals(this.amount, paymentRequestDTO.amount);
   }
 
   @Override

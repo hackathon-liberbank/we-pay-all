@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.generated.api.TokenApi;
+import com.example.generated.model.Token;
 import com.liberbank.apigateway.service.TokenService;
 
 @Controller
@@ -17,7 +18,7 @@ public class TokenController implements TokenApi {
     TokenService tokenService;
 
     @Override
-    public ResponseEntity<Void> tokenPost(String code) {
+    public ResponseEntity<Token> tokenCodePost(String code) {
         return tokenService.tokenPost(code);
     }
 
