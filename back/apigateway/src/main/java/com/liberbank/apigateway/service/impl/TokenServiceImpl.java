@@ -1,4 +1,4 @@
-package com.wepayall.apigateway.service.impl;
+package com.liberbank.apigateway.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.wepayall.apigateway.service.TokenService;
+import com.liberbank.apigateway.service.TokenService;
 
 import lombok.extern.slf4j.Slf4j;
 

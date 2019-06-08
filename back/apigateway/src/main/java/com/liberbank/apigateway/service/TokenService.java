@@ -1,4 +1,4 @@
-package com.wepayall.apigateway.service;
+package com.liberbank.apigateway.service;
 
 import org.springframework.http.ResponseEntity;
 
