@@ -13,7 +13,6 @@ public class TokenController implements TokenApi {
 
     @Override
     public ResponseEntity<Void> tokenPost(String code) {
-        // TODO Auto-generated method stub
         return null;
     }
 
