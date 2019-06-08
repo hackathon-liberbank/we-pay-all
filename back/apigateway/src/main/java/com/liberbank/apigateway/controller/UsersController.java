@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.generated.api.UsersApi;
 import com.example.generated.model.AccountsGetResponse;
+import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
 import com.example.generated.model.UserDataUpdate;
@@ -26,13 +27,12 @@ public class UsersController implements UsersApi {
     @Override
     public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID) {
         // TODO Auto-generated method stub
-        return null;
+        return service.usersUserIDAccountsGet(token, userID);
     }
 
     @Override
     public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
+        return service.usersUserIDEventsEventIDGet(token, userID, eventID);
     }
 
     @Override
@@ -49,16 +49,22 @@ public class UsersController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID, @Min(1) Long eventID) {
+    public ResponseEntity<MessageResponse> usersUserIDPut(String token, @Min(1) Long userID,
+            @Valid UserDataUpdate userdata) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ResponseEntity<MessageResponse> usersUserIDPut(String token, @Min(1) Long userID,
-            @Valid UserDataUpdate userdata) {
+    public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID,
+            @Valid CreateEventRequest createEventRequest) {
+        return service.usersUserIDEventsPost(token, userID, createEventRequest);
+    }
+
+    @Override
+    public ResponseEntity<Event> usersUserIDEventsGet(String token, @Min(1) Long userID) {
         // TODO Auto-generated method stub
-        return null;
+        return service.usersUserIDEventsGet(token, userID);
     }
 
 }

@@ -57,13 +57,93 @@ paths:
       parameters: 
        - name: code
          type: string
-         required: true
+         required: false
          in: header
       responses:
         201:
           description: CREATED
+  /payments/{payment-product}:
+    post:
+      tags:
+      - payments
+      summary: Operation to initiate a single payment, valid both for a payment at
+        the time and at a future date indicated
+      description: |
+        In this Sandbox version, you can use the following values to force your desired response back:
+
+        | Case | X-Request-Id |
+        | ------- | -------- |
+        | Status code 400   | 550e8400-e29b-41d4-a716-446655440400    |
+        | Status code 404   | 550e8400-e29b-41d4-a716-446655440404    |
+        | Status code 500   | 550e8400-e29b-41d4-a716-446655440500    |
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: token
+        in: header
+        type: string
+        required: true
+        description: token de identificación
+      - name: payment-product
+        in: path
+        type: string
+        required: true
+        description: The types of payment supported. ONLY SUPPORTS 'sepa-credit-transfers' VALUE
+      - name: X-Request-Id
+        in: header
+        type: string
+        format: uuid
+        required: true
+        description: ID of the request, unique to the call, determined by the initiating
+          party
+      - name: PSU-IP-Address
+        in: header
+        type: string
+        description: The IP of the HTTP request between the PSU and the TPP. If it
+          is not available, the TPP IP is used.
+        required: true
+      - name: post-req-body-payments
+        in: body
+        schema:
+          $ref: '#/definitions/paymentInitiationRequest'
+        required: true  
+      responses:
+        201:
+          description: 201 Created
+          headers:
+            Location:
+              type: string
+              description: URI to the created resource
+            X-Request-Id:
+              type: string
+              format: uuid
+          schema:
+            $ref: '#/definitions/paymentInitiationResponse'
     
   /users/{userID}/events:
+    get:
+     tags: 
+        - Privado
+     summary: Recuperar la informacion de un evento
+     description: Recuperar la informacion de un evento 
+     parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+     responses:
+       200:
+         description: OK
+         schema:
+           $ref: '#/definitions/Event'
     post:
       tags: 
         - Privado
@@ -84,13 +164,11 @@ paths:
           type: integer
           minimum: 1
           format: int64
-        - name: eventID
-          in: path
+        - name: CreateEventRequest
+          in: body
           required: true
-          type: integer
-          minimum: 1
-          format: int64
-        
+          schema:
+            $ref: '#/definitions/CreateEventRequest'
       responses:
         200:
           description: OK 
@@ -267,100 +345,13 @@ paths:
           schema:
             $ref: '#/definitions/TransactionResponse'  
  
-  /payments/{payment-product}:
-    post:
-      tags:
-      - payments
-      summary: Operation to initiate a single payment, valid both for a payment at
-        the time and at a future date indicated
-      description: |
-        In this Sandbox version, you can use the following values to force your desired response back:
 
-        | Case | X-Request-Id |
-        | ------- | -------- |
-        | Status code 400   | 550e8400-e29b-41d4-a716-446655440400    |
-        | Status code 404   | 550e8400-e29b-41d4-a716-446655440404    |
-        | Status code 500   | 550e8400-e29b-41d4-a716-446655440500    |
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: token
-        in: header
-        type: string
-        required: true
-        description: token de identificación
-      - name: payment-product
-        in: path
-        type: string
-        required: true
-        example: sepa-credit-transfers
-        description: The types of payment supported. ONLY SUPPORTS 'sepa-credit-transfers' VALUE
-      - name: X-Request-Id
-        in: header
-        type: string
-        format: uuid
-        required: true
-        description: ID of the request, unique to the call, determined by the initiating
-          party
-      - name: PSU-Id
-        in: header
-        type: string
-        description: ID of the PSU in the bank. It is not necessary in a previous
-          step authentication has been performed
-      - name: PSU-Id-Type
-        in: header
-        type: string
-        description: PSU ID type
-      - name: PSU-Corporate-Id
-        in: header
-        type: string
-        description: ID of the corporation in online channels
-      - name: PSU-Corporate-Id-Type
-        in: header
-        type: string
-        description: Type of the corporation ID
-      - name: PSU-IP-Address
-        in: header
-        type: string
-        description: The IP of the HTTP request between the PSU and the TPP. If it
-          is not available, the TPP IP is used.
-        required: true
-      - name: TPP-Redirect-URI
-        in: header
-        type: string
-        description: URI of the TPP where the flow of the transaction must be redirected
-          after a Redirect.
-      - name: TPP-Nok-Redirect-URI
-        in: header
-        type: string
-        description: If it is used, it must be redirected to this URI of the TPP in
-          case of obtaining a KO in the transaction
-      - name: post-req-body-payments
-        in: body
-        schema:
-          $ref: '#/definitions/paymentInitiationRequest'
-      responses:
-        201:
-          description: 201 Created
-          headers:
-            Location:
-              type: string
-              description: URI to the created resource
-            X-Request-Id:
-              type: string
-              format: uuid
-          schema:
-            $ref: '#/definitions/paymentInitiationResponse'
-                   
-            
 definitions:
   
   Event:
     type: object
     properties:
-      price:
+      users:
         type: array
         items:
           $ref: '#/definitions/User'
@@ -370,8 +361,21 @@ definitions:
         type: string
       name:
         type: string
+      price:
+        type: integer
+        format: int64
         
-      
+  CreateEventRequest:
+    type: object
+    properties:
+      name: 
+        type: string
+      description:
+        type: string
+      price:
+        type: integer
+        format: int64
+  
   TransactionResponse:
     type: object
     properties:
@@ -555,7 +559,7 @@ definitions:
         maximum: 10000
       productName:
         type: string
-  
+    
   paymentInitiationRequest:
     type: object
     required:
@@ -643,7 +647,6 @@ definitions:
         type: string
         description: Several links recognizable by the TPP, for redirection in the
           case of SCA type Oauth or Redirect
-          
   accountReferenceDto:
     description: Reference to an account
     type: object
