@@ -120,11 +120,9 @@ definitions:
         example: EUR
       amount:
         type: number
-        format: double
+        format: decimal
         description: Quantity with fractional digits. Negative quantities begin with
           the minus sign '-'. The decimal point separator is a point'.'
-        example: 1000.00
-        
   balancesResponseDto:
     description: Balance associated with an account
     type: object
