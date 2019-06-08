@@ -21,10 +21,7 @@ public class PaymentsController implements PaymentsApi {
 
     @Override
     public ResponseEntity<PaymentInitiationResponse> paymentsPaymentProductPost(String token, String paymentProduct,
-            UUID xRequestId, String psUIPAddress, String psUId, String psUIdType, String psUCorporateId,
-            String psUCorporateIdType, String tpPRedirectURI, String tpPNokRedirectURI,
-            @Valid PaymentInitiationRequest postReqBodyPayments) {
-
+            UUID xRequestId, String psUIPAddress, @Valid PaymentInitiationRequest postReqBodyPayments) {
         return paymentsService.paymentsPaymentProductPost(token, paymentProduct, psUIPAddress, xRequestId,
                 postReqBodyPayments);
     }
