@@ -1,0 +1,72 @@
+<!-- MODAL REGISTRO -->
+<!-- Modal -->
+<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="modalRegistro" aria-hidden="true" *ngIf="!identity">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalRegistro">Registro</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="alert alert-success" role="alert" *ngIf="status == 'success'">
+                  <span>Registro completado correctamente. <button type="button" class="btn" data-dismiss="modal">Aceptar</button></span>
+              </div>
+              <div class="alert alert-danger" *ngIf="status == 'error'">
+                  <span>Registro no completado, vuelva a intentarlo. <button type="button" class="btn" data-dismiss="modal">Aceptar</button></span>
+              </div>
+              <form #registerForm="ngForm" (ngSubmit)="resgistrar(registerForm)" *ngIf="showForm">
+                  <div class="form-group">
+                      <label for="name" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
+                      <br>
+                      <input type="text" class="form-control form-control-sm" name="name" #name="ngModel" [(ngModel)]="user.name" minlength="3" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="surname" class="col-sm-2 col-form-label col-form-label-sm">Apellidos</label>
+                      <input type="text" class="form-control form-control-sm" name="surname" #surname="ngModel" [(ngModel)]="user.surname" minlength="3" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="phone" class="col-sm-2 col-form-label col-form-label-sm">Teléfono</label>
+                      <input type="text" class="form-control form-control-sm" name="phone" #phone="ngModel" [(ngModel)]="user.phone" minlength="9" maxlength="15" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="email" class="col-form-label col-form-label-sm">Correo electrónico</label>
+                      <input type="email" class="form-control form-control-sm" name="email" #email="ngModel" [(ngModel)]="user.email" pattern="^[a-zA-Z0-9-@.]+$" minlength="6" maxlength="30" required>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="country" class="col-sm-2 col-form-label col-form-label-sm">Ciudad</label>
+                          <input type="text" class="form-control form-control-sm" name="country" #country="ngModel" [(ngModel)]="user.address.country" minlength="3" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <label for="street" class="col-sm-2 col-form-label col-form-label-sm">Calle</label>
+                          <input type="text" class="form-control form-control-sm" name="street" #street="ngModel" [(ngModel)]="user.address.street" minlength="3" required>
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="number" class="col-sm-2 col-form-label col-form-label-sm">Número</label>
+                          <input type="text" class="form-control form-control-sm" name="number" #number="ngModel" [(ngModel)]="user.address.number" minlength="1" required>
+                      </div>
+                      <div class="form-group col-md-4">
+                          <label for="floor" class="col-sm-2 col-form-label col-form-label-sm">Planta</label>
+                          <input type="text" class="form-control form-control-sm" name="floor" #floor="ngModel" [(ngModel)]="user.address.floor" minlength="1" required>
+                      </div>
+                      <div class="form-group col-md-2">
+                          <label for="postalCode" class="col-sm-2 col-form-label col-form-label-sm">CP</label>
+                          <input type="text" class="form-control form-control-sm" name="postalCode" #postalCode="ngModel" [(ngModel)]="user.address.postalCode" minlength="4" required>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
+                      <input type="password" class="form-control form-control-sm" name="password" #password="ngModel" [(ngModel)]="user.password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" required>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <input type="submit" class="btn btn-success" value="Registrar">
+                  </div>
+              </form>
+          </div>
+
+      </div>
+  </div>
+</div>

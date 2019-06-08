@@ -1,0 +1,44 @@
+<!-- PERFIL DEL USUARIO -->
+<div *ngIf="identity">
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+          <h1 class="display-4">weAllPay</h1>
+          <p class="lead">Bienvenido a tu gestor de eventos.</p>
+      </div>
+  </div>
+  <br>
+  <div class="card-deck">
+
+      <div class="card">
+
+          <div class="card-body">
+              <h5 class="card-title">Alta Eventos</h5>
+              <p class="card-text">Da de alta el evento que te apetezca.</p>
+              <a [routerLink]="['/alta-evento']" class="btn btn-success">Acceder</a>
+          </div>
+          <div class="card-footer">
+              <small class="text-muted">Propón tú el plan!</small>
+          </div>
+      </div>
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">Search</h5>
+              <p class="card-text"></p>
+              <a [routerLink]="['/buscador']" class="btn btn-success">Acceder</a>
+          </div>
+          <div class="card-footer">
+              <small class="text-muted">Ey! Que no se te olviden tus suscripciones!</small>
+          </div>
+      </div>
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">Blockchain</h5>
+              <p class="card-text">La forma más fácil de estar conectado con el resto del mundo.</p>
+              <a [routerLink]="['/blockchain']" class="btn btn-success">Acceder</a>
+          </div>
+          <div class="card-footer">
+              <small class="text-muted">Accede.</small>
+          </div>
+      </div>
+  </div>
+</div>

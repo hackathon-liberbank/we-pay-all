@@ -1,0 +1,48 @@
+<div class="contenedor">
+  <img src="../../../assets/img/fuegos.jpg" />
+  <div class="contenedor-pequeno">
+      <div class="span">
+          <span>Alta de Eventos!</span>
+      </div>
+
+      <form #formAltas="ngForm" (ngSubmit)="suscribirse(formAltas)" *ngIf="show">
+          <input type="text" placeholder="Nombre del evento" name="name" #name="ngModel" [(ngModel)]="event.event">
+          <textarea placeholder="Descripción" name="description" #description="ngModel" [(ngModel)]="event.description"></textarea>
+          <input type="number" placeholder="Saldo mínimo (EUR)" name="saldo" #saldo="ngModel" [(ngModel)]="event.amount">
+
+          <button type="submit" class="btn btn-info" value="acceder" *ngIf="show">Suscribirse</button>
+      </form>
+
+      <div class="container-fluid" *ngIf="!show">
+
+          <div class="alert alert-success" role="alert">
+              <h4 class="alert-heading">Te has suscrito correctamente a: {{event.event}}.</h4>
+              <p>{{event.description}}</p>
+              <hr>
+              <p class="mb-0">Importe mínimo del evento: {{event.amount}} €</p>
+            </div>
+
+            <div class="container-fluid">
+                  <!-- TABLA AMIGOS -->
+                <p class="text-center">Suscritos:</p>
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- *ngFor="let desglose of desglosesCuenta" -->
+                        <tr>
+                          <!-- {{desglose.bookingDate}} -->
+                          <td>{{identity.name}} {{identity.surname}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+            </div>
+            <button type="submit" class="btn btn-warning" (click)="pagar()" >Pagar</button>
+
+      </div>
+
+  </div>
+</div>

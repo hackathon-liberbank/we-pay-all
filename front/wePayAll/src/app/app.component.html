@@ -1,0 +1,75 @@
+<!-- Barra de Navegación -->
+<div class="navigation col-lg-12">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse">
+
+          <div class="navbar-header">
+              <li class="navbar-brand">
+                  <span class="logo">W </span> <span class="logo">weAllPay</span>
+                  <!-- <img src="../assets/img/liberbank-reto.png" width="30" height="30" alt=""> -->
+              </li>
+          </div>
+
+          <ul class="navbar-nav" *ngIf="!identity">
+              <li>
+                  <a [routerLink]="['/login']" class="boton-acceso">
+                      <span data-toggle="modal" data-target="#modalAcceso">Acceso Clientes</span>
+                  </a>
+              </li>
+
+              <li>
+                  <a [routerLink]="['/registre']" class="boton-login">
+                      <span data-toggle="modal" data-target="#modalRegistro"> Registrate </span>
+                  </a>
+              </li>
+          </ul>
+
+          <ul class="nav navbar-nav ml-auto" *ngIf="identity">
+              <li class="dropdown pull-right">
+                  <a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
+                      Bienvenido {{identity.name}} {{identity.surname}}
+                      <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a [routerLink]="['/user-profile']">
+                              <span class="dropdown-item"> Inicio </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a [routerLink]="['/alta-evento']">
+                              <span class="dropdown-item"> Alta Eventos </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a [routerLink]="['/buscador']">
+                              <span class="dropdown-item"> Buscar </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a [routerLink]="['/blockchain']">
+                              <span class="dropdown-item"> Blockchain </span>
+                          </a>
+                      </li>
+                      <li>
+                          <a>
+                              <span class="boton-logout" (click)="logOut()"> Cerrar sesion </span>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+      </div>
+  </nav>
+  <!-- Imagen de fondo -->
+  <div class="fondo" *ngIf="!identity">
+      <div class="contenedor">
+          <img src="../../../assets/img/luces.jpg" />
+          <!-- Boton sobre imagen de fondo -->
+          <!-- <button type="button" class="btn btn-warning boton">Acceso Clientes</button> -->
+      </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+

@@ -1,0 +1,27 @@
+
+
+<div class="contenedor">
+  <img src="../../../assets/img/blockchain.png" />
+  <div class="contenedor-pequeno">
+      <div class="span">
+          <!-- <span>Blockchain</span> -->
+          <img src="../../../assets/img/ethereum.svg" class="ethereum">
+          <form #registerForm="ngForm">
+              <input type="text" name="hash" #hash="ngModel" [(ngModel)]="idTransaccion.hash" placeholder="Introduce tu identificador de transacción">
+              <button type="submit" class="btn btn-info">Consultar</button>
+          </form>
+      </div>
+<!-- *ngIf="!showData" -->
+      <div class="container-fluid" >
+          <p>Datos de la transacción</p>
+          <ul class="list-group list-group-flush">
+            <!-- {{transactionResponse.debitor.name}}  {{transactionResponse.debitor.surname}} -->
+              <li class="list-group-item"><span>Emisor:</span>Pedro de la Fuente</li>
+              <!-- {{transactionResponse.creditor.name}} {{transactionResponse.creditor.surname}} -->
+              <li class="list-group-item"><span>Receptor:</span>Despedida de Solteros</li>
+              <!-- {{transactionResponse.ammount}} € -->
+              <li class="list-group-item"><span>Importe:</span>15.6728,34 €</li>
+            </ul>
+      </div>
+  </div>
+</div>
