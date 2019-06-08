@@ -770,9 +770,10 @@ definitions:
         example: EUR
       amount:
         type: number
-        format: decimal
+        format: double
         description: Quantity with fractional digits. Negative quantities begin with
           the minus sign '-'. The decimal point separator is a point'.'
+        example: 1000.00
           
   transactionDto:
     description: Information of a transaction
