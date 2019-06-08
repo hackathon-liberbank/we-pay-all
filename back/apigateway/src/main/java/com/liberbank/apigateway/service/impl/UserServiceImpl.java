@@ -1,6 +1,8 @@
 package com.liberbank.apigateway.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ import com.example.generated.model.AccountsGetResponse;
 import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
+import com.example.generated.model.User;
 import com.example.generated.model.UserDataUpdate;
 import com.liberbank.apigateway.dao.EventDAO;
 import com.liberbank.apigateway.dao.UserDAO;
@@ -46,8 +49,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
+        EventDAO event = eventRepository.findById(eventID)
+                .orElseThrow(() -> new EventRepositoryException("Evento no Encontrado"));
+
+        Event response = new Event();
+        List<User> users = new ArrayList<User>();
+        event.getUsers().forEach(i -> {
+            User user = new User();
+            user.setName(i.getName());
+            user.setSurname(i.getSurname());
+            users.add(user);
+        });
+
+        response.setDescription(event.getDescription());
+        response.setIban("003400000514562365814785");
+        response.setPrice(event.getPrice());
+        response.setUsers(users);
+        response.setName(event.getName());
+        return new ResponseEntity<Event>(response, HttpStatus.OK);
     }
 
     @Override
@@ -111,6 +130,36 @@ public class UserServiceImpl implements UserService {
                     "no se ha podido actualizar el usuario con los datos del evento : " + e.getMessage());
         }
         return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<Event> usersUserIDEventsGet(String token, @Min(1) Long userID) {
+        UserDAO user = userRepository.findById(userID)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> id : " + userID));
+
+        Event response = new Event();
+        List<EventDAO> events = new ArrayList<EventDAO>();
+        user.getEvents().forEach(i -> {
+            EventDAO e = new EventDAO();
+            e.setName(i.getName());
+            e.setPrice(i.getPrice());
+            e.setDescription(i.getDescription());
+            e.setUsers(i.getUsers());
+            events.add(e);
+        });
+        List<User> users = new ArrayList<User>();
+        events.get(0).getUsers().forEach(i -> {
+            User u = new User();
+            u.setName(i.getName());
+            u.setSurname(i.getSurname());
+            users.add(u);
+        });
+        response.setDescription(events.get(0).getDescription());
+        response.setIban("003400000514562365814785");
+        response.setPrice(events.get(0).getPrice());
+        response.setUsers(users);
+        response.setName(events.get(0).getName());
+        return new ResponseEntity<Event>(response, HttpStatus.OK);
     }
 
 }

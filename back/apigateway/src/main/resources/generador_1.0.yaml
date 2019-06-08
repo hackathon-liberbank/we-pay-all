@@ -123,6 +123,27 @@ paths:
             $ref: '#/definitions/paymentInitiationResponse'
     
   /users/{userID}/events:
+    get:
+     tags: 
+        - Privado
+     summary: Recuperar la informacion de un evento
+     description: Recuperar la informacion de un evento 
+     parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+     responses:
+       200:
+         description: OK
+         schema:
+           $ref: '#/definitions/Event'
     post:
       tags: 
         - Privado

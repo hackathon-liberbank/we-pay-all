@@ -28,4 +28,5 @@ public interface UserService {
     public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID,
             @Valid CreateEventRequest createEventRequest);
 
+    public ResponseEntity<Event> usersUserIDEventsGet(String token, @Min(1) Long userID);
 }
