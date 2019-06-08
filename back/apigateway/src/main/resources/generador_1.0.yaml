@@ -57,7 +57,7 @@ paths:
       parameters: 
        - name: code
          type: string
-         required: false
+         required: true
          in: header
       responses:
         201:

@@ -51,8 +51,7 @@ public class UsersController implements UsersApi {
     @Override
     public ResponseEntity<MessageResponse> usersUserIDPut(String token, @Min(1) Long userID,
             @Valid UserDataUpdate userdata) {
-        // TODO Auto-generated method stub
-        return null;
+        return service.usersUserIDPut(token, userID, userdata);
     }
 
     @Override
