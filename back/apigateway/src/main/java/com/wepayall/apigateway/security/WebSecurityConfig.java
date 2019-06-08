@@ -14,8 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.wepayall.apigateway.security.jwt.JwtAuthEntryPoint;
-import com.wepayall.apigateway.security.jwt.JwtAuthTokenFilter;
+import com.liberbank.apigateway.security.UserDetailsImpl;
+import com.liberbank.apigateway.security.jwt.JwtAuthEntryPoint;
+import com.liberbank.apigateway.security.jwt.JwtAuthTokenFilter;
 
 @Configuration
 @EnableWebSecurity
