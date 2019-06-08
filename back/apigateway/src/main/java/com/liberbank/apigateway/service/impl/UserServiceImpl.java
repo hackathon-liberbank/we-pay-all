@@ -1,5 +1,8 @@
 package com.liberbank.apigateway.service.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
@@ -16,7 +19,9 @@ import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
 import com.example.generated.model.UserDataUpdate;
+import com.liberbank.apigateway.dao.EventDAO;
 import com.liberbank.apigateway.dao.UserDAO;
+import com.liberbank.apigateway.exceptions.EventRepositoryException;
 import com.liberbank.apigateway.exceptions.UserRepositoryException;
 import com.liberbank.apigateway.repository.EventRepository;
 import com.liberbank.apigateway.repository.UserRpository;
@@ -84,7 +89,28 @@ public class UserServiceImpl implements UserService {
         UserDAO user = userRepository.findById(userID)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> id : " + userID));
 
-        return null;
+        Set<UserDAO> users = new HashSet<UserDAO>();
+        users.add(user);
+
+        EventDAO event = new EventDAO();
+        event.setDescription(createEventRequest.getDescription());
+        event.setPrice(createEventRequest.getPrice());
+        event.setUsers(users);
+
+        try {
+            eventRepository.save(event);
+        } catch (Exception e) {
+            throw new EventRepositoryException("El evento no se ha registrado : " + e.getMessage());
+        }
+        user.getEvents().add(event);
+        try {
+            userRepository.save(user);
+
+        } catch (Exception e) {
+            throw new UserRepositoryException(
+                    "no se ha podido actualizar el usuario con los datos del evento : " + e.getMessage());
+        }
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
 }
