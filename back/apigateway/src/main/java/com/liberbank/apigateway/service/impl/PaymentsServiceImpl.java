@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.generated.model.PaymentInitiationRequest;
 import com.example.generated.model.PaymentInitiationResponse;
-import com.liberbank.apigateway.service.BlockchainService;
 import com.liberbank.apigateway.service.PaymentsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +30,8 @@ public class PaymentsServiceImpl implements PaymentsService {
     @Value("${bankapi.port}")
     String bankApiPort;
 
-    @Autowired
-    BlockchainService bcService;
+    // @Autowired
+    // BlockchainService bcService;
 
     /**
      * usar este postReqBodyPayments { "endToEndIdentification": "3456345623457", "debtorAccount": { "iban":
@@ -45,8 +43,9 @@ public class PaymentsServiceImpl implements PaymentsService {
      * "requestedExecutionDate": "2017-07-21" }
      */
     @Override
-    public ResponseEntity<PaymentInitiationResponse> paymentsPaymentProductPost(String token, String paymentProduct,
-            String psUIPAddress, UUID xRequestId, @Valid PaymentInitiationRequest postReqBodyPayments) {
+    public ResponseEntity<PaymentInitiationResponse> paymentsPaymentProductPost(String token, Long userID, Long eventID,
+            String paymentProduct, String psUIPAddress, UUID xRequestId,
+            @Valid PaymentInitiationRequest postReqBodyPayments) {
 
         RestTemplate restTemplate;
         HttpEntity<PaymentInitiationRequest> request;
@@ -59,6 +58,9 @@ public class PaymentsServiceImpl implements PaymentsService {
         headers.add("token", token);
         headers.add("X-Request-Id", xRequestId.toString());
         headers.add("PSU-IP-Address", psUIPAddress);
+
+        postReqBodyPayments.setUserID(userID);
+        postReqBodyPayments.setEventID(eventID);
 
         request = new HttpEntity<>(postReqBodyPayments, headers);
 

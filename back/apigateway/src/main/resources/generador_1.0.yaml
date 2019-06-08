@@ -223,7 +223,7 @@ paths:
        200:
          description: OK
   
-  /users/{userID}/events/{eventID}/payments:
+  /users/{userID}/events/{eventID}/payments/{payment-product}:
     post:
       tags: 
         - Privado
@@ -590,6 +590,12 @@ definitions:
     - creditorAccount
     - creditorName
     properties:
+      userID:
+        type: integer
+        format: int64
+      eventID:
+        type: integer
+        format: int64
       endToEndIdentification:
         type: string
         maxLength: 35
@@ -635,6 +641,12 @@ definitions:
     - transactionStatus
     - paymentId
     properties:
+      userID:
+        type: integer
+        format: int64
+      eventID:
+        type: integer
+        format: int64
       transactionStatus:
         type: string
         enum:
