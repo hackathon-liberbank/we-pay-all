@@ -1,0 +1,67 @@
+#Server 
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: local
+
+---
+  
+#Constanst
+database: we-pay-all-db
+host: localhost:3306  
+
+#JPA
+spring:
+  profiles: local
+  jpa: 
+    generate-ddl: true
+    show-sql: false
+    properties: 
+      hibernate: 
+        format_sql : true
+        dialect: org.hibernate.dialect.MySQL5Dialect 
+  datasource: 
+    url: jdbc:mysql://${host}/${database}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: root
+    password: root  
+    
+# App Properties
+app: 
+    jwtSecret: padawansSecretKey
+    jwtExpiration: 86400
+    
+bankapi:
+  host: localhost
+  port: 8081
+  
+---
+
+#Constanst
+database: we-pay-all-db
+host: localhost:3306  
+
+#JPA
+spring:
+  profiles: luismi
+  jpa: 
+    generate-ddl: true
+    show-sql: false
+    properties: 
+      hibernate: 
+        format_sql : true
+        dialect: org.hibernate.dialect.MySQL5Dialect 
+  datasource: 
+    url: jdbc:mysql://${host}/${database}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT
+    username: root
+    password: admin  
+    
+# App Properties
+app: 
+    jwtSecret: padawansSecretKey
+    jwtExpiration: 86400
+    
+bankapi:
+  host: localhost
+  port: 8081

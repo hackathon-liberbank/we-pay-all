@@ -1,0 +1,486 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: 'LiberBank-ApiGateway'
+  description: 'LiberBank-ApiGateway definition'
+
+paths:
+  /login:
+    post:
+      tags: 
+        - Publico
+      summary: Login de usuario.
+      description: Obtener la autorizacion para el usuario.
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters:
+        - name: LoginRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/LoginResponse'
+  /registry:
+    post:
+      tags: 
+        - Publico
+      summary: Registrar un nuevo usuario.
+      description: Registrar un nuevo usuario.
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters: 
+        - name: Userdata
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserData'
+      responses:
+        201:
+          description: CREATED
+          schema:
+            $ref: '#/definitions/MessageResponse'
+  
+  /token:
+     post:
+      tags: 
+        - Privado
+      summary: obtener la autorizacion del banco.
+      description: obtener la autorizacion del banco.
+      parameters: 
+       - name: code
+         type: string
+         required: true
+         in: header
+      responses:
+        201:
+          description: CREATED
+    
+  /users/{userID}/events:
+    post:
+      tags: 
+        - Privado
+      summary: Crea un evento desde el perfil de usuario.
+      description: Crea un evento desde el perfil de usuario.
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: CreateEventRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateEventRequest'
+      responses:
+        200:
+          description: OK 
+  
+  /users/{userID}/events/{eventID}:
+   get:
+     tags: 
+        - Privado
+     summary: Recuperar la informacion de un evento
+     description: Recuperar la informacion de un evento 
+     parameters: 
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+     responses:
+       200:
+         description: OK
+         schema:
+           $ref: '#/definitions/Event'
+   post:
+      tags: 
+        - Privado
+      summary: Agregar un usuario a un evento 
+      description: Agregar un usuario desde su perfil a un evento
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+      responses:
+       200:
+         description: OK
+  
+  /users/{userID}/events/{eventID}/payments:
+    post:
+      tags: 
+        - Privado
+      summary: Realizar un pago desde la cuenta generada del evento.
+      description: Realizar un pago desde la cuenta generada del evento.
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: eventID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+      responses:
+        200:
+          description: OK
+    
+  
+  /users/{userID}:
+    put:
+      tags: 
+        - Privado
+      summary: Modificar datos de Usuario.
+      description: Modificar datos de Usuario.
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+        - name: Userdata
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserDataUpdate'
+      responses:
+        201:
+          description: CREATED
+          schema:
+            $ref: '#/definitions/MessageResponse'
+  
+  /users/{userID}/accounts:
+    get:
+      tags: 
+        - Privado
+      summary: Consultar los datos las cuentas de un usuario
+      description: Consultar los datos las cuentas de un usuario
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: userID
+          in: path
+          required: true
+          type: integer
+          format: int64
+          minimum: 1
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/AccountsGetResponse'     
+
+  /transactions/{transactionHash}:
+    get:
+      tags: 
+        - Privado
+      produces: 
+        - application/json
+      consumes: 
+        - application/json
+      summary: Obtener los datos de la transaccion registrados en la blockchain.
+      description: Obtener los datos de la transaccion registrados en la blockchain.
+      parameters:
+        - name: token
+          in: header
+          type: string
+          required: true
+        - name: transactionHash
+          in: path
+          required: true
+          type: string
+          minLength: 60
+          maxLength: 70
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/TransactionResponse'  
+ 
+
+definitions:
+  
+  Event:
+    type: object
+    properties:
+      price:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      description:
+        type: string
+      iban:
+        type: string
+      name:
+        type: string
+        
+  CreateEventRequest:
+    type: object
+    properties:
+      name: 
+        type: string
+      description:
+        type: string
+      price:
+        type: integer
+        format: int64
+  
+  TransactionResponse:
+    type: object
+    properties:
+      event:
+        type: string
+      creditor:
+        type: string
+      ammount:
+        type: integer
+        format: int64
+        
+  
+  
+  
+  AccountsGetResponse:
+    type: object
+    properties:
+      accounts:
+        type: array
+        items:
+          $ref: '#/definitions/AccountsResponse'
+  
+  Accountrequest:
+    type: object
+    properties:
+      currency:
+        type: string
+        description: Default EUR
+      accountAgent:
+        type: string
+        
+  AccountsResponse:
+    type: object
+    properties:
+      accountAgent: 
+        type: string
+      iban:
+        type: string
+      currency:
+        type: string
+  
+  MessageResponse:
+    type: object
+    properties:
+      timestamp:
+        type: string
+      httpStatus:
+        type: integer
+      reasonPhrase:
+        type: string
+      message:
+        type: string
+  
+  User:
+   type: object
+   properties:
+      name:
+        type: string
+        minLength: 3
+      surname:
+        type: string
+        minLength: 3
+    
+  
+  UserData:
+    type: object
+    properties:
+      name:
+        type: string
+        minLength: 3
+      surname:
+        type: string
+        minLength: 3
+      phone:
+        type: string
+        minLength: 9
+        maxLength: 15
+      email:
+        type: string
+        pattern: "^[a-zA-Z0-9-@.]+$"
+        minLength: 6
+        maxLength: 30
+      address:
+        $ref: '#/definitions/Address'
+      password:
+        description: el password debe estar codificado haciendo uso de un sha256.
+        type: string
+        pattern: "[A-Fa-f0-9]{64}"
+        maxLength: 64
+        minLength: 64
+  
+  UserDataUpdate:
+    type: object
+    properties:
+      name:
+        type: string
+        minLength: 3
+      surname:
+        type: string
+        minLength: 3
+      phone:
+        type: string
+        minLength: 9
+        maxLength: 15
+      email:
+        type: string
+        pattern: "^[a-zA-Z0-9-@.]+$"
+        minLength: 6
+        maxLength: 30
+      address:
+        $ref: '#/definitions/Address'
+         
+    
+  
+  LoginRequest:
+    type: object
+    properties:
+      userName:
+        description: email del usuario.
+        type: string
+        pattern: "^[a-zA-Z0-9-@.]+$"
+        minLength: 6
+        maxLength: 30
+      password:
+        description: el password debe estar codificado haciendo uso de un sha256.
+        type: string
+        pattern: "[A-Fa-f0-9]{64}"
+        maxLength: 64
+        minLength: 64
+  
+  LoginResponse:
+    type: object
+    properties:
+      userID:
+        type: integer
+        minimum: 1
+        maximum: 10000
+      name:
+        type: string
+        minLength: 3
+      surname:
+        type: string
+        minLength: 3
+      phone:
+        type: string
+        minLength: 3
+      email:
+        type: string
+        pattern: "^[a-zA-Z0-9-@.]+$"
+        minLength: 6
+        maxLength: 30
+      address:
+        $ref: '#/definitions/Address'
+      bearer:
+        type: string
+  Address:
+    type: object
+    properties:
+      street:
+        type: string
+        minLength: 3
+      country:
+        type: string
+        minLength: 3
+      number:
+        type: string
+        minLength: 1
+      floor:
+        type: string
+        minLength: 1
+      postalCode:
+        type: string
+        minLength: 4
+  
+  Product:
+    type: object
+    properties:
+      productID:
+        type: integer
+        minimum: 1
+        maximum: 10000
+      productName:
+        type: string
+    
+
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /pedrodlf/LiberBank-ApiGateway/1.0
+schemes:
+ - https
