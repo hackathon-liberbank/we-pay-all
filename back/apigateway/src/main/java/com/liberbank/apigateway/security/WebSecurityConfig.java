@@ -7,7 +7,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,24 +19,18 @@ import com.liberbank.apigateway.security.jwt.JwtAuthTokenFilter;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-		prePostEnabled = true
-)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private static final String[] AUTH_WHITELIST = {
 
-	            "/swagger-resources/**",
-	            "/swagger-ui.html",
-	            "/swagger-ui.html/**",
-	            "/v2/api-docs",
-	            "/registry",
-	            "/login",
-	            "/webjars/**"
-	    };
-	private static final String[] AUTH_BLACKLIST = {
+    private static final String[] AUTH_WHITELIST = {
 
-            
+            "/swagger-resources/**", "/swagger-ui.html", "/swagger-ui.html/**", "/v2/api-docs", "/registry", "/login",
+            "/webjars/**", "/users/{userID}/events" };
+
+    private static final String[] AUTH_BLACKLIST = {
+
     };
+
     @Autowired
     UserDetailsImpl userDetailsService;
 
@@ -51,9 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -66,18 +57,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().
-                authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().anonymous()
-                .antMatchers(AUTH_BLACKLIST).permitAll().anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        
+        http.cors().and().csrf().disable().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().anyRequest()
+                .anonymous().antMatchers(AUTH_BLACKLIST).permitAll().anyRequest().authenticated().and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

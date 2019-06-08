@@ -48,7 +48,7 @@ public class RegistryServiceImpl implements RegistryService {
         user.setSurname(userdata.getSurname());
         user.setUserName(userdata.getEmail());
         user.setPassword(encoder.encode(userdata.getPassword().toUpperCase()));
-
+        user.setPhone(userdata.getPhone());
         AddressDAO address = DataUtils.getAdressFromRequest(userdata.getAddress());
 
         try {
