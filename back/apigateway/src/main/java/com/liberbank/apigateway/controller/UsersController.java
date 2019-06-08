@@ -32,8 +32,7 @@ public class UsersController implements UsersApi {
 
     @Override
     public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
+        return service.usersUserIDEventsEventIDGet(token, userID, eventID);
     }
 
     @Override

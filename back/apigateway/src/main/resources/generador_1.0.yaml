@@ -271,7 +271,7 @@ definitions:
   Event:
     type: object
     properties:
-      price:
+      users:
         type: array
         items:
           $ref: '#/definitions/User'
@@ -281,6 +281,9 @@ definitions:
         type: string
       name:
         type: string
+      price:
+        type: integer
+        format: int64
         
   CreateEventRequest:
     type: object

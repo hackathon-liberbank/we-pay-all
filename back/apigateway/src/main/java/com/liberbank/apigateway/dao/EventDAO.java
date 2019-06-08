@@ -23,6 +23,9 @@ public class EventDAO {
     private String description;
 
     @Column
+    private String name;
+
+    @Column
     private Long price;
 
     @ManyToMany
@@ -34,12 +37,20 @@ public class EventDAO {
         // TODO Auto-generated constructor stub
     }
 
-    public EventDAO(Long id, String description, Long price, Set<UserDAO> users) {
+    public EventDAO(String description, String name, Long price, Set<UserDAO> users) {
         super();
-        this.id = id;
         this.description = description;
+        this.name = name;
         this.price = price;
         this.users = users;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

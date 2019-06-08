@@ -1,6 +1,8 @@
 package com.liberbank.apigateway.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ import com.example.generated.model.AccountsGetResponse;
 import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
+import com.example.generated.model.User;
 import com.example.generated.model.UserDataUpdate;
 import com.liberbank.apigateway.dao.EventDAO;
 import com.liberbank.apigateway.dao.UserDAO;
@@ -46,8 +49,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Event> usersUserIDEventsEventIDGet(String token, @Min(1) Long userID, @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
+
+        EventDAO event = eventRepository.findById(eventID)
+                .orElseThrow(() -> new EventRepositoryException("Evento no Encontrado"));
+
+        Event response = new Event();
+        List<User> users = new ArrayList<User>();
+        event.getUsers().forEach(i -> {
+            User user = new User();
+            user.setName(i.getName());
+            user.setSurname(i.getSurname());
+            users.add(user);
+        });
+
+        response.setDescription(event.getDescription());
+        response.setIban("003400000514562365814785");
+        response.setPrice(event.getPrice());
+        response.setUsers(users);
+        response.setName(event.getName());
+        return new ResponseEntity<Event>(response, HttpStatus.OK);
     }
 
     @Override
@@ -96,7 +116,7 @@ public class UserServiceImpl implements UserService {
         event.setDescription(createEventRequest.getDescription());
         event.setPrice(createEventRequest.getPrice());
         event.setUsers(users);
-
+        event.setName(createEventRequest.getName());
         try {
             eventRepository.save(event);
         } catch (Exception e) {
