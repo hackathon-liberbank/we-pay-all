@@ -1,5 +1,7 @@
 package com.liberbank.apigateway.controller;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
@@ -14,6 +16,8 @@ import com.example.generated.model.AccountsGetResponse;
 import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
+import com.example.generated.model.PaymentInitiationRequest;
+import com.example.generated.model.PaymentInitiationResponse;
 import com.example.generated.model.UserDataUpdate;
 import com.liberbank.apigateway.service.UserService;
 
@@ -35,12 +39,12 @@ public class UsersController implements UsersApi {
         return service.usersUserIDEventsEventIDGet(token, userID, eventID);
     }
 
-    @Override
-    public ResponseEntity<Void> usersUserIDEventsEventIDPaymentsPost(String token, @Min(1) Long userID,
-            @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public ResponseEntity<Void> usersUserIDEventsEventIDPaymentsPost(String token, @Min(1) Long userID,
+    // @Min(1) Long eventID) {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 
     @Override
     public ResponseEntity<Void> usersUserIDEventsEventIDPost(String token, @Min(1) Long userID, @Min(1) Long eventID) {
@@ -64,6 +68,14 @@ public class UsersController implements UsersApi {
     public ResponseEntity<Event> usersUserIDEventsGet(String token, @Min(1) Long userID) {
         // TODO Auto-generated method stub
         return service.usersUserIDEventsGet(token, userID);
+    }
+
+    @Override
+    public ResponseEntity<PaymentInitiationResponse> usersUserIDEventsEventIDPaymentsPost(@Min(1) Long userID,
+            String token, @Min(1) Long eventID, String paymentProduct, UUID xRequestId, String psUIPAddress,
+            @Valid PaymentInitiationRequest postReqBodyPayments) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
