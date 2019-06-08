@@ -84,13 +84,11 @@ paths:
           type: integer
           minimum: 1
           format: int64
-        - name: eventID
-          in: path
+        - name: CreateEventRequest
+          in: body
           required: true
-          type: integer
-          minimum: 1
-          format: int64
-        
+          schema:
+            $ref: '#/definitions/CreateEventRequest'
       responses:
         200:
           description: OK 
@@ -284,8 +282,16 @@ definitions:
       name:
         type: string
         
-      
-      
+  CreateEventRequest:
+    type: object
+    properties:
+      name: 
+        type: string
+      description:
+        type: string
+      price:
+        type: integer
+        format: int64
   
   TransactionResponse:
     type: object
