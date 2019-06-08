@@ -7,6 +7,7 @@ import { User } from '../model/user';
 import { Event } from '../model/event';
 import { sha256 } from 'js-sha256';
 import { UsersEvent } from '../model/usersEvent';
+// import { Pago, DebtorAccount, instructedAmount, CreditorAccount, CreditorAddress } from '../model/pago';
 
 import { GLOBAL } from '../model/Global';
 
@@ -16,7 +17,7 @@ export class UserRegistreService {ss
 
     public url: string;
     public apiUser: User;
-
+    public token;
 
 
     constructor(
@@ -24,6 +25,7 @@ export class UserRegistreService {ss
     ) {
         this.url = GLOBAL.url
         this.apiUser  = JSON.parse(localStorage.getItem('userLogin'));
+
     }
 
     registrado(userRegister: UserRegistre): Observable<any>{
@@ -58,13 +60,14 @@ export class UserRegistreService {ss
         return this.apiUser;
     }
 
-    // getToken(): Observable<any> {
-    //   let code = localStorage.getItem('code')
-    //   console.log(code)
-    //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('code', code).set('Accept', '*/*');
+    getToken(): Observable<any> {
+      let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+      let code = localStorage.getItem('code')
+      console.log(code)
+      let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('Accept', '*/*');
 
-    //   return this._http.post(this.url + 'token', null, {headers: headers})
-    // }
+      return this._http.post(this.url + 'token/' + code, null, {headers: headers})
+    }
 
 // CREA UN EVENTO DESDE EL PERFIL DE USUARIO
 
@@ -84,22 +87,26 @@ createEvent( event: Event): Observable<any> {
   getEvent( detalle: UsersEvent ): Observable<any> {
   let apiUser = JSON.parse(localStorage.getItem('userLogin'));
   let json = JSON.stringify(detalle);
-  console.log(json)
-  let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('token', '1234');
-  console.log(headers)
-  console.log(apiUser.bearer)
 
-  return this._http.get(this.url + 'users/'+  apiUser.userID + '/events', json, {headers: headers})
+  let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  return this._http.get(this.url + 'users/'+  apiUser.userID+ '/events', json, {headers: headers})
   }
 
 // REALIZAR UN PAGO
 
-makePayment() {
-  let apiUser = JSON.parse(localStorage.getItem('userLogin'));
-  let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('token', '1234');
-  console.log(headers)
-  return this._http.post(this.url + 'users/'+  apiUser.userID + '/events/payments', {headers: headers})
-}
+// makePayment( pago: Pago) {
+//   let json = JSON.stringify(pago);
+
+//   let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+
+//   let token = JSON.parse(localStorage.getItem('token'));
+//   console.log(token)
+
+//   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('token', token).set('X-Request-Id', '328784784').set('PSU-IP-Address', '2345435435');
+
+//   return this._http.post(this.url + 'users/'+  apiUser.userID + '/events/2323/3454365/payments', json, {headers: headers})
+// }
 
   // consultHash( idTransaccion: Hash) {
 

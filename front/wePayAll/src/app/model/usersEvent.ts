@@ -4,7 +4,8 @@ export class UsersEvent {
     public description: string,
     public iban: string,
     public name: string,
-    public price: string
+    public price: string,
+    public token: string
 
   ) {}
 }
@@ -15,3 +16,5 @@ export class Users {
     public surname: string
   ) {}
 }
+
+

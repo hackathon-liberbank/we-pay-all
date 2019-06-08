@@ -69,8 +69,8 @@ textarea {
 
 .alert-success {
   color: #155724;
-  background-color: #a1aba44a;
-  border-color: #a1aba44a;
+  background-color: #a1aba49e;
+  border-color: #a1aba49e;
   font-family: 'Open';
 }
 
@@ -127,5 +127,5 @@ h5 {
 }
 
 .table td {
-  background: #a1aba44a;
+  background: #a1aba49e;
 }

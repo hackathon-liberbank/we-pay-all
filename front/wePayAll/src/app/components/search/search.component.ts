@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private _userRegisterService: UserRegistreService,
   ) {
-    this.usersEvent = new UsersEvent ([], '', '', '', '');
+    this.usersEvent = new UsersEvent ([], '', '', '', '', '');
   }
 
   ngOnInit() {

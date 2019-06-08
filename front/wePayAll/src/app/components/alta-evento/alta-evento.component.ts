@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../model/user';
 import { Event } from '../../model/event';
 import { UsersEvent, Users } from '../../model/usersEvent';
+// import { Pago, DebtorAccount, instructedAmount, CreditorAccount, CreditorAddress } from '../model/pago';
 
 @Component({
   selector: 'app-alta-evento',
@@ -18,6 +19,8 @@ export class AltaEventoComponent implements OnInit {
   public user: User;
   public usersEvent: UsersEvent;
   public identity;
+  public getUserEvents;
+  // public pago: Pago;
 
   constructor(
     private _userRegisterService: UserRegistreService,
@@ -26,7 +29,8 @@ export class AltaEventoComponent implements OnInit {
   ) {
     this.show = true;
     this.event = new Event ('', '', '');
-    this.usersEvent = new UsersEvent ([], '', '', '', '');
+    this.usersEvent = new UsersEvent ([], '', '', '', '', '');
+    // this.pago = new pago('','','','','','','','','','','');
 
   }
 
@@ -44,6 +48,11 @@ export class AltaEventoComponent implements OnInit {
         this.show = false;
         this._userRegisterService.getEvent(this.usersEvent).subscribe(
           response => {
+            this.getUserEvents = response;
+            console.log(this.getUserEvents)
+
+            localStorage.setItem('token', JSON.stringify(this.getUserEvents.token));
+            console.log('Usuario guardado')
             console.log(response)
             console.log('Nos muestra los datos de la suscripcion')
           },
@@ -57,24 +66,20 @@ export class AltaEventoComponent implements OnInit {
     )
   }
 
-  pagar(){
-    console.log("Pagar")
-    this._userRegisterService.makePayment().subscribe(
-      response => {
-        console.log(response)
-
-        setTimeout(()=>{
-          this._router.navigate(['/user-profile']);
-      }, 3000);
+  // pagar(){
+  //   console.log("Pagar")
+  //   this._userRegisterService.makePayment(this.pago).subscribe(
+  //     response => {
+  //       console.log(response)
 
 
-      }, error => {
-        console.error(error)
-        this._router.navigate(['/user-profile']);
-      }
-    )
+  //     }, error => {
+  //       console.error(error)
+  //       // this._router.navigate(['/user-profile']);
+  //     }
+  //   )
 
 
 
-  }
+  // }
 }
