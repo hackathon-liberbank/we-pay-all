@@ -5,6 +5,7 @@ import { UserRegistre } from '../model/userRegistre';
 import { Login } from '../model/login';
 import { User } from '../model/user';
 import { Event } from '../model/event';
+import { Hash } from '../model/hash';
 import { sha256 } from 'js-sha256';
 import { UsersEvent } from '../model/usersEvent';
 // import { Pago, DebtorAccount, instructedAmount, CreditorAccount, CreditorAddress } from '../model/pago';
@@ -87,13 +88,13 @@ createEvent( event: Event): Observable<any> {
   getEvent( detalle: UsersEvent ): Observable<any> {
   let apiUser = JSON.parse(localStorage.getItem('userLogin'));
   let json = JSON.stringify(detalle);
-
+  console.log(json)
   let headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-  return this._http.get(this.url + 'users/'+  apiUser.userID+ '/events', json, {headers: headers})
+let uri = this.url + 'users/'+  apiUser.userID+ '/events';
+  return this._http.get(uri, {headers: headers});
   }
 
-// REALIZAR UN PAGO
+// REALIZAR UN PAGO  ss
 
 // makePayment( pago: Pago) {
 //   let json = JSON.stringify(pago);
@@ -108,12 +109,12 @@ createEvent( event: Event): Observable<any> {
 //   return this._http.post(this.url + 'users/'+  apiUser.userID + '/events/2323/3454365/payments', json, {headers: headers})
 // }
 
-  // consultHash( idTransaccion: Hash) {
+  consultHash( idTransaccion: Hash) {
 
-  //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
 
-  //   return this._http.get(this.url + 'transactions/'+  idTransaccion.hash, {headers: headers})
+    return this._http.get(this.url + 'transactions/'+  idTransaccion.hash, {headers: headers})
 
-  // }
+  }
 
 }

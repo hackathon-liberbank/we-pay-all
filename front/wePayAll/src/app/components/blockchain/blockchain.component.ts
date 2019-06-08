@@ -28,27 +28,27 @@ export class BlockchainComponent implements OnInit {
   ngOnInit() {
   }
 
-  // consultarHash() {
-  //   console.log(this.idTransaccion)
+  consultarHash() {
+    console.log(this.idTransaccion)
 
-  //   this._userRegisterService.consultHash(this.idTransaccion).subscribe(
-  //     response => {
-  //       //this.transactionResponse = response;
-  //       console.log(this.transactionResponse)
+    this._userRegisterService.consultHash(this.idTransaccion).subscribe(
+      response => {
+        //this.transactionResponse = response;
+        console.log(this.transactionResponse)
 
-  //       if(this.transactionResponse) {
-  //         console.log("Tengo los datos de la transacción")
-  //         this.showData = false;
-  //       } else {
-  //         this.showData = true;
-  //       }
+        if(this.transactionResponse) {
+          console.log("Tengo los datos de la transacción")
+          this.showData = false;
+        } else {
+          this.showData = true;
+        }
 
-  //       // this._router.navigate(['/login']);
+        // this._router.navigate(['/login']);
 
-  //     }, error => {
-  //       console.error(error)
-  //     }
-  //   )
-  // }
+      }, error => {
+        console.error(error)
+      }
+    )
+  }
 
 }
