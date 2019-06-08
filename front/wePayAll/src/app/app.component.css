@@ -1,6 +1,35 @@
+@font-face {
+  font-family: 'Open';
+  src: url('../assets/font/OpenSans-Light.ttf');
+  }
+
+  @font-face {
+    font-family: 'Open';
+    src: url('../assets/font/poi.ttf');
+  }
+
+  @font-face {
+    font-family: 'josefina';
+    src: url('../assets/font/josefina.ttf');
+  }
+
 body {
   padding-top: 70px;
   background-image: url('../assets/img/luces.jpg');
+}
+.logo {
+  font-family: 'josefina';
+  font-size: 25px;
+}
+
+.logo2 {
+  font-family: 'josefina';
+  font-size: 22px;
+}
+
+.logo:hover .logo2:hover {
+  color: #00A38D;
+
 }
 
 .navigation {
@@ -12,8 +41,9 @@ body {
   border-radius: 0px !important;
 }
 
-.navbar-brand img {
-  width: 110px;
+.navbar-brand  {
+  font-size: 20px;
+  color: #00A38D;
 }
 
 .btn-success {
@@ -41,6 +71,7 @@ text-decoration: none !important;
   font-weight: bold !important;
   font-size: 15px !important;
   margin-right: 25px !important;
+  margin-left: 25px !important;
   cursor: pointer;
 }
 
@@ -64,11 +95,6 @@ text-decoration: none !important;
   list-style: none !important;
   color: black;
   font-size: 16px;
-}
-
-@font-face {
-font-family: 'Open';
-src: url('../assets/font/OpenSans-Light.ttf');
 }
 
 .boton-logout {

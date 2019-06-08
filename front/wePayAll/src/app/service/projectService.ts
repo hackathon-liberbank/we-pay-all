@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { UserRegistre } from '../model/userRegistre';
 import { Login } from '../model/login';
 import { User } from '../model/user';
+import { Event } from '../model/event';
 import { sha256 } from 'js-sha256';
+import { UsersEvent } from '../model/usersEvent';
 
 import { GLOBAL } from '../model/Global';
 
@@ -14,6 +16,7 @@ export class UserRegistreService {ss
 
     public url: string;
     public apiUser: User;
+
 
 
     constructor(
@@ -55,45 +58,48 @@ export class UserRegistreService {ss
         return this.apiUser;
     }
 
-    getToken(): Observable<any> {
-      let code = localStorage.getItem('code')
-      console.log(code)
-      let headers = new HttpHeaders().set('Content-Type', 'application/json').set('code', code).set('Accept', '*/*');
+    // getToken(): Observable<any> {
+    //   let code = localStorage.getItem('code')
+    //   console.log(code)
+    //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('code', code).set('Accept', '*/*');
 
-      return this._http.post(this.url + 'token', null, {headers: headers})
-    }
+    //   return this._http.post(this.url + 'token', null, {headers: headers})
+    // }
 
 // CREA UN EVENTO DESDE EL PERFIL DE USUARIO
 
-    // createEvent( user: User ): Observable<any> {
+createEvent( event: Event): Observable<any> {
+  let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+  let json = JSON.stringify(event);
+  console.log(json)
+  let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('token', '1234');
+  console.log(headers)
+  console.log(apiUser.bearer)
 
-    //   let json = JSON.stringify(user);
-    //   console.log(user)
-    //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
-    //   console.log(headers)
-
-    //   return this._http.post(this.url + 'users/'+  user.userID + '/events', json, {headers: headers})
-    // }
+  return this._http.post(this.url + 'users/'+  apiUser.userID + '/events', json, {headers: headers})
+}
 
 // RECUPERAR INFORMACION DE UN EVENTO
 
-      // getEvent( user: User ): Observable<any> {
-      //   let eventId = localStorage.getItem('eventId');
+  getEvent( detalle: UsersEvent ): Observable<any> {
+  let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+  let json = JSON.stringify(detalle);
+  console.log(json)
+  let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('token', '1234');
+  console.log(headers)
+  console.log(apiUser.bearer)
 
-      //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('eventId', eventId);
+  return this._http.get(this.url + 'users/'+  apiUser.userID + '/events', json, {headers: headers})
+  }
 
-      //   return this._http.get(this.url + 'users/'+  user.userID + '/events' + eventId, {headers: headers})
-      // }
+// REALIZAR UN PAGO
 
-
-  //   updateUser( user: User): Observable<any> {
-
-  //     let json = JSON.stringify(user);
-  //     console.log(user)
-  //     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
-  //     console.log(headers)
-  //     return this._http.put(this.url + 'users/'+  user.userID, json, {headers: headers})
-  // }
+makePayment() {
+  let apiUser = JSON.parse(localStorage.getItem('userLogin'));
+  let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer: '+ this.apiUser.bearer).set('token', '1234');
+  console.log(headers)
+  return this._http.post(this.url + 'users/'+  apiUser.userID + '/events/payments', {headers: headers})
+}
 
   // consultHash( idTransaccion: Hash) {
 

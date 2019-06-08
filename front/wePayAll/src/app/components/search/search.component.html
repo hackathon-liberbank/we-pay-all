@@ -1,5 +1,13 @@
 <div class="container-fluid">
-  <table class="table table-striped">
+    <form #formSearch="ngForm">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Buscador</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Búsqueda...">
+      </div>
+      <button type="submit" value="buscar"></button>
+    </form>
+
+    <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">Evento</th>
@@ -12,13 +20,13 @@
         <!-- *ngFor="let desglose of desglosesCuenta" -->
         <tr>
           <!-- {{desglose.bookingDate}} -->
-          <td>Comida familiar</td>
+          <td>{{usersEvent.name}}</td>
           <!-- {{desglose.entryReference}} -->
-          <td>Almuerzo con la abuela por su cumpleaños</td>
+          <td>{{usersEvent.description}}</td>
           <!-- {{desglose.amount.amount}} {{desglose.amount.currency}}-->
-          <th scope="row">50,00 €</th>
+          <th scope="row">{{usersEvent.price}}</th>
           <!-- {{desglose.balances.closingBooked.lastChangeDateTime}} -->
-          <td>Pedro de la Fuente</td>
+          <td>{{usersEvent.users}}</td>
         </tr>
       </tbody>
     </table>

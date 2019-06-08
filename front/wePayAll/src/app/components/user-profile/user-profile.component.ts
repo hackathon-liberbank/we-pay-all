@@ -37,16 +37,16 @@ export class UserProfileComponent implements OnInit {
       console.log("no llego")
     }
 
-    this._userRegisterService.getToken().subscribe(
-      response => {
-        console.log(response)
-        this.token = response;
-        console.log(this.token)
-      },
-      error => {
-        console.error(error)
-      }
-    )
+    // this._userRegisterService.getToken().subscribe(
+    //   response => {
+    //     console.log(response)
+    //     this.token = response;
+    //     console.log(this.token)
+    //   },
+    //   error => {
+    //     console.error(error)
+    //   }
+    // )
 }
 
 }
