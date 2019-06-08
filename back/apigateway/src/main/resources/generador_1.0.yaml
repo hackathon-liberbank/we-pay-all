@@ -68,14 +68,6 @@ paths:
       - payments
       summary: Operation to initiate a single payment, valid both for a payment at
         the time and at a future date indicated
-      description: |
-        In this Sandbox version, you can use the following values to force your desired response back:
-
-        | Case | X-Request-Id |
-        | ------- | -------- |
-        | Status code 400   | 550e8400-e29b-41d4-a716-446655440400    |
-        | Status code 404   | 550e8400-e29b-41d4-a716-446655440404    |
-        | Status code 500   | 550e8400-e29b-41d4-a716-446655440500    |
       consumes:
       - application/json
       produces:
@@ -237,26 +229,56 @@ paths:
         - Privado
       summary: Realizar un pago desde la cuenta generada del evento.
       description: Realizar un pago desde la cuenta generada del evento.
+      consumes:
+      - application/json
+      produces:
+      - application/json
       parameters:
-        - name: token
-          in: header
-          type: string
-          required: true
         - name: userID
           in: path
           required: true
           type: integer
           minimum: 1
           format: int64
+        - name: token
+          in: header
+          type: string
+          required: true
         - name: eventID
           in: path
           required: true
           type: integer
           minimum: 1
           format: int64
+        - name: payment-product
+          in: path
+          type: string
+          required: true
+        - name: X-Request-Id
+          in: header
+          type: string
+          format: uuid
+          required: true
+        - name: PSU-IP-Address
+          in: header
+          type: string
+          required: true
+        - name: post-req-body-payments
+          in: body
+          schema:
+            $ref: '#/definitions/paymentInitiationRequest'
       responses:
-        200:
-          description: OK
+        201:
+          description: 201 Created
+          headers:
+            Location:
+              type: string
+              description: URI to the created resource
+            X-Request-Id:
+              type: string
+              format: uuid
+          schema:
+            $ref: '#/definitions/paymentInitiationResponse'
     
   
   /users/{userID}:

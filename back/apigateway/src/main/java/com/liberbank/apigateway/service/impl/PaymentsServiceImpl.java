@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.generated.model.PaymentInitiationRequest;
 import com.example.generated.model.PaymentInitiationResponse;
+import com.liberbank.apigateway.service.BlockchainService;
 import com.liberbank.apigateway.service.PaymentsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,9 @@ public class PaymentsServiceImpl implements PaymentsService {
 
     @Value("${bankapi.port}")
     String bankApiPort;
+
+    @Autowired
+    BlockchainService bcService;
 
     /**
      * usar este postReqBodyPayments { "endToEndIdentification": "3456345623457", "debtorAccount": { "iban":
