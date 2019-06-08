@@ -8,14 +8,17 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.generated.model.AccountsGetResponse;
+import com.example.generated.model.CreateEventRequest;
 import com.example.generated.model.Event;
 import com.example.generated.model.MessageResponse;
 import com.example.generated.model.UserDataUpdate;
 import com.liberbank.apigateway.dao.UserDAO;
 import com.liberbank.apigateway.exceptions.UserRepositoryException;
+import com.liberbank.apigateway.repository.EventRepository;
 import com.liberbank.apigateway.repository.UserRpository;
 import com.liberbank.apigateway.service.UserService;
 
@@ -26,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRpository userRepository;
+
+    @Autowired
+    EventRepository eventRepository;
 
     @Override
     public ResponseEntity<AccountsGetResponse> usersUserIDAccountsGet(String token, @Min(1) Long userID) {
@@ -53,12 +59,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID, @Min(1) Long eventID) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public ResponseEntity<MessageResponse> usersUserIDPut(String token, @Min(1) Long userID,
             @Valid UserDataUpdate userdata) {
         UserDAO user = userRepository.findById(userID)
@@ -75,6 +75,16 @@ public class UserServiceImpl implements UserService {
         response.setMessage(
                 "El usuario " + user.getName() + " " + user.getSurname() + " se ha actualizado correctamente");
         return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> usersUserIDEventsPost(String token, @Min(1) Long userID,
+            @Valid CreateEventRequest createEventRequest) {
+
+        UserDAO user = userRepository.findById(userID)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> id : " + userID));
+
+        return null;
     }
 
 }
