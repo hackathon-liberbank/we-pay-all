@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRegistreService } from '../../service/projectService';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { User } from '../../model/user';
 import { Event } from '../../model/event';
+import { UsersEvent, Users } from '../../model/usersEvent';
 
 @Component({
   selector: 'app-alta-evento',
@@ -13,13 +15,14 @@ export class AltaEventoComponent implements OnInit {
 
   public show: boolean;
   public event: Event;
+  public user: User;
   public identity;
 
   constructor(
     private _userRegisterService: UserRegistreService,
   ) {
     this.show = true;
-    this.event = new Event ('', '', 12);
+    this.event = new Event ('', '', '');
 
   }
 
@@ -29,14 +32,29 @@ export class AltaEventoComponent implements OnInit {
 
   }
 
-  suscribirse(){
-    console.log("acceder")
-    this.show = false;
-    console.log(this.event)
+//   suscribirse(){
+//     console.log("evento creado");
+//     this._userRegisterService.createEvent(this.event).subscribe(
+//       response => {
+//         console.log(response)
+//          this.event = response;
+//         if(this.event) {
+//           this.eventId = this.event.eventId;
+//           localStorage.setItem('eventId', JSON.stringify(this.eventId));
+//           this.show = false;
+//          }
+//       },
+//       error => {
+//         console.error(error)
+//       }
+//     )
+// }
 
-  }
+
+
   pagar(){
     console.log("Pagar")
+
 
   }
 }

@@ -67,6 +67,19 @@ textarea {
   margin-top: 2%;
 }
 
+.alert-success {
+  color: #155724;
+  background-color: #a1aba44a;
+  border-color: #a1aba44a;
+  font-family: 'Open';
+}
+
+.alert-heading {
+  color: whitesmoke;
+  font-family: 'Open';
+  font-size: 20px;
+}
+
 .span {
   margin-top: 28px;
   font-size: 31px;
@@ -79,6 +92,7 @@ textarea {
 .list-group {
   width: 75%;
   padding-left: 180px;
+  font-family: 'Open';
 }
 
 .list-group-item {
@@ -89,13 +103,29 @@ textarea {
   color: whitesmoke;
 }
 
-p {
+p{
   margin-top: 0;
   margin-bottom: 1rem;
   font-family: 'Open';
-  font-size: 28px;
-  margin-bottom: 45px;
+  font-size: 19px;
+  margin-bottom: 22px;
   text-align: center;
   color: whitesmoke;
 }
 
+h5 {
+  color: whitesmoke;
+  text-align: center;
+}
+
+.table thead th {
+  color: whitesmoke;
+}
+
+.table td, .table th {
+  color: white;
+}
+
+.table td {
+  background: #a1aba44a;
+}

@@ -11,6 +11,7 @@ import { UserRegistreService } from '../../service/projectService';
 export class UserProfileComponent implements OnInit {
 
   public identity;
+  public token;
 
   public code: string;
   constructor(
@@ -27,6 +28,7 @@ export class UserProfileComponent implements OnInit {
     this._route.queryParams.subscribe(params => {
         this.code = params['code'];
         console.log(this.code)
+        localStorage.setItem('code', this.code);
       });
 
     if(this.code != null) {
@@ -35,7 +37,16 @@ export class UserProfileComponent implements OnInit {
       console.log("no llego")
     }
 
-    console.log()
+    this._userRegisterService.getToken().subscribe(
+      response => {
+        console.log(response)
+        this.token = response;
+        console.log(this.token)
+      },
+      error => {
+        console.error(error)
+      }
+    )
 }
 
 }

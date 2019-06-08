@@ -8,29 +8,40 @@
       <form #formAltas="ngForm" (ngSubmit)="suscribirse(formAltas)" *ngIf="show">
           <input type="text" placeholder="Nombre del evento" name="name" #name="ngModel" [(ngModel)]="event.event">
           <textarea placeholder="Descripción" name="description" #description="ngModel" [(ngModel)]="event.description"></textarea>
-          <input type="text" placeholder="Saldo mínimo (EUR)" name="saldo" #saldo="ngModel" [(ngModel)]="event.amount">
+          <input type="number" placeholder="Saldo mínimo (EUR)" name="saldo" #saldo="ngModel" [(ngModel)]="event.amount">
 
           <button type="submit" class="btn btn-info" value="acceder" *ngIf="show">Suscribirse</button>
       </form>
 
       <div class="container-fluid" *ngIf="!show">
-          <!-- <p>Detalles de la suscripción</p>
-
-          <ul class="list-group list-group-flush">
-              <li class="list-group-item"><a>{{event.event}}</a></li>
-              <li class="list-group-item">{{event.description}}</li>
-              <li class="list-group-item">{{event.amount}}</li>
-              <br><hr/>
-          </ul> -->
 
           <div class="alert alert-success" role="alert">
-              <h4 class="alert-heading">Suscripción realizada!</h4>
-              <p>Aww yeah, Te acabas de suscribir a: {{event.event}}.</p>
+              <h4 class="alert-heading">Te has suscrito correctamente a: {{event.event}}.</h4>
+              <p>{{event.description}}</p>
               <hr>
-              <p class="mb-0">{{event.description}}</p>
+              <p class="mb-0">Importe mínimo del evento: {{event.amount}} €</p>
             </div>
 
-            <button (click)="pagar()" class="btn btn-warning">Pagar</button>
+            <div class="container-fluid">
+                  <!-- TABLA AMIGOS -->
+                <p class="text-center">Suscritos:</p>
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- *ngFor="let desglose of desglosesCuenta" -->
+                        <tr>
+                          <!-- {{desglose.bookingDate}} -->
+                          <td>{{identity.name}} {{identity.surname}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+            </div>
+
+            <a [routerLink]="['/user-profile']" class="btn btn-warning">Pagar</a>
       </div>
 
   </div>

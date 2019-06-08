@@ -1,3 +1,25 @@
-<p>
-  search works!
-</p>
+<div class="container-fluid">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Evento</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Importe aportado</th>
+          <th scope="col">Integrantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- *ngFor="let desglose of desglosesCuenta" -->
+        <tr>
+          <!-- {{desglose.bookingDate}} -->
+          <td>Comida familiar</td>
+          <!-- {{desglose.entryReference}} -->
+          <td>Almuerzo con la abuela por su cumpleaños</td>
+          <!-- {{desglose.amount.amount}} {{desglose.amount.currency}}-->
+          <th scope="row">50,00 €</th>
+          <!-- {{desglose.balances.closingBooked.lastChangeDateTime}} -->
+          <td>Pedro de la Fuente</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
