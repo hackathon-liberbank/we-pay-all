@@ -108,12 +108,12 @@ createEvent( event: Event): Observable<any> {
 //   return this._http.post(this.url + 'users/'+  apiUser.userID + '/events/2323/3454365/payments', json, {headers: headers})
 // }
 
-  // consultHash( idTransaccion: Hash) {
+  consultHash( idTransaccion: Hash) {
 
-  //   let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer '+ this.apiUser.bearer);
 
-  //   return this._http.get(this.url + 'transactions/'+  idTransaccion.hash, {headers: headers})
+    return this._http.get(this.url + 'transactions/'+  idTransaccion.hash, {headers: headers})
 
-  // }
+  }
 
 }
